@@ -1,11 +1,14 @@
 <div class="header">
-  <ul>
-    <ng-container ng-if="!authenticated; else #loggedIn">
-        <li><a routerLink="/login">Login</a></li>
-        <li><a routerLink="/register">Register</a></li>
-    </ng-container> 
-    <ng-template #loggedIn>
-        <li><a (click)="onLogout()">Logout</a></li>            
-    </ng-template>
+  <ul *ngIf="!authenticated; else loggedIn">
+    <li class="hide-on-desktop"></li>
+    <li routerLinkActive="active"><a routerLink="/login">Login</a></li>
+    <li routerLinkActive="active"><a routerLink="/register">Register</a></li>
   </ul>
+  <ng-template #loggedIn>
+    <ul>
+      <li class="hide-on-desktop"></li>
+      <li routerLinkActive="active"><a routerLink="/characters">My Characters</a></li>      
+      <li class="nav-logout"><a (click)="onLogout()">Logout</a></li>
+    </ul>
+  </ng-template>
 </div>

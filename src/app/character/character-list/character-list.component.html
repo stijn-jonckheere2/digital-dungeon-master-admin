@@ -1,1 +1,29 @@
 <h3>Choose a character</h3>
+
+<p *ngIf="characters.length === 0">Loading...</p>
+
+<div class="characterView" *ngIf="characters.length > 0">
+    <div class="character" *ngFor="let character of characters; let i = index">
+        <p>{{ character.name }} - lv. {{ character.level }}</p>
+        <div>
+            <p>Class</p>
+            <p>Race</p>
+            <p>Age</p>
+        </div>
+        <div>
+            <p>{{ character.className }}</p>
+            <p>{{ character.race }}</p>
+            <p>{{ character.age }}</p>
+        </div>
+        <div class="character-links">
+            <a [routerLink]="['/characters', i]">View</a>
+            <a [routerLink]="['/characters', i, 'edit']">Edit</a>
+            <a (click)="onDeleteCharacter(i)">Delete</a>
+        </div>
+    </div>
+</div>
+
+<div class="button-wrapper">
+    <a [routerLink]="['/characters/new']" class="btn btn-primary">New Character</a>
+    <button (click)="onSave()" class="btn btn-default">Save All</button>
+</div>

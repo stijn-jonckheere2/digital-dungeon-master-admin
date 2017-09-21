@@ -9,6 +9,7 @@ import { AuthGuard } from "./auth/auth-guard.service";
 import { AuthModule } from "./auth/auth.module";
 
 import { HeaderComponent } from "./header/header.component";
+import { CharacterModule } from "./character/character.module";
 
 @NgModule({
   declarations: [
@@ -18,8 +19,9 @@ import { HeaderComponent } from "./header/header.component";
   imports: [
     BrowserModule,
     HttpModule,
+    AuthModule,
+    CharacterModule,
     AppRoutingModule,
-    AuthModule
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
