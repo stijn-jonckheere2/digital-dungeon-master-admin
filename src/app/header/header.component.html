@@ -1,0 +1,11 @@
+<div class="header">
+  <ul>
+    <ng-container ng-if="!authenticated; else #loggedIn">
+        <li><a routerLink="/login">Login</a></li>
+        <li><a routerLink="/register">Register</a></li>
+    </ng-container> 
+    <ng-template #loggedIn>
+        <li><a (click)="onLogout()">Logout</a></li>            
+    </ng-template>
+  </ul>
+</div>

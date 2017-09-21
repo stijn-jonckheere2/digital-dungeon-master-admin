@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+.page-wrapper {
+    padding: 20px;
+    min-height: calc(100vh);
+}
+
+@media (min-width: 768px){
+    .page-wrapper {
+        padding: 60px 0;
+        max-width: 768px;
+        margin: 0 auto;
+    }
+}
