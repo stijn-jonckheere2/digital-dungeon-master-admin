@@ -1,0 +1,42 @@
+<h2>Inventory</h2>
+<ng-container *ngIf="itemFormEnabled === false">
+  <div class="inventory" *ngIf="character.inventory && character.inventory.length > 0">
+    <div class="inventory-item" *ngFor="let item of character.inventory.reverse(); let itemIndex = index">
+      <p class="inventory-item-name">
+        {{ item.name }}
+        <span *ngIf="item.amount > 1">({{ item.amount }})</span>
+      </p>
+      <p class="inventory-item-description">
+        {{ item.description }}
+      </p>
+      <div class="inventory-buttons">
+        <button class="btn btn-primary" *ngIf="item.consumable" (click)="useItem(itemIndex)">Use</button>
+        <button class="btn btn-danger" (click)="removeItem(itemIndex)">Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="button-wrapper">
+    <button class="btn btn-primary" (click)="enableAddItem()">Add new item</button>
+  </div>
+</ng-container>
+
+<div *ngIf="itemFormEnabled === true">
+  <div class="form-group">
+    <label for="name">name</label>
+    <input type="text" id="name" class="form-control" [(ngModel)]="newInventoryItem.name" />
+  </div>
+  <div class="form-group">
+    <label for="description">description</label>
+    <textarea rows="10" id="description" class="form-control" [(ngModel)]="newInventoryItem.description"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="age">amount</label>
+    <input type="number" id="age" class="form-control" [(ngModel)]="newInventoryItem.amount" />
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" value="" [(ngModel)]="newInventoryItem.consumable">consumable</label>
+  </div>
+  <button class="btn btn-primary" (click)="addItem()">Save</button>
+  <a (click)="cancelAddItem()" class="btn btn-default">Cancel</a>
+</div>

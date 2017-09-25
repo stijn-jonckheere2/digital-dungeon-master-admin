@@ -1,0 +1,93 @@
+@import '~sass/variables';
+
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: $primary-color;
+    display: block;
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);    
+    z-index: 10;
+}
+
+.header ul {
+    margin: 0;
+    cursor: pointer;
+
+    li {
+        padding: 10px 20px;            
+    }
+}
+
+.dropdown-open li {
+    display: block;
+}
+
+.dropdown-closed li {
+    list-style-type: none;
+    display: none;
+}
+.header li.active a {
+    position: relative;
+    &::before, &::after {
+        position: absolute;
+        top: calc(50% - 2px);
+        content: "";
+        background-color: $primary-color-dark;
+        height: 4px;
+        display: block;
+        width: 50px;
+    }
+    &::after {
+        right: 0;
+    }
+}
+.header li:first-of-type {
+    display: block;
+    text-align: center;
+
+    background-image: url("/assets/images/menu-icon.png");
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: 20px;
+}
+.header a {
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    display: block;
+    padding: 10px 0;
+}
+.header li.nav-dark {
+    background-color: $primary-color-dark;
+}
+
+@media (min-width: 768px) {
+    .header ul {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 0;
+        display: flex;
+
+        li {
+            display: block;
+            padding: 0;
+            text-align: center;
+
+            &.active {
+                border-bottom: 5px solid #fff;
+                a {
+                    color: #fff; 
+                    
+                }
+                a::before, a::after {
+                    display: none;
+                }
+            }
+            a {
+                padding: 20px;
+            }
+        }
+    }
+}

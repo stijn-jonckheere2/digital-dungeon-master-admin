@@ -9,18 +9,36 @@ import { HttpModule } from "@angular/http";
 import { AuthGuard } from "../auth/auth-guard.service";
 import { CharacterEditComponent } from "./character-edit/character-edit.component";
 import { CharacterNewComponent } from "./character-new/character-new.component";
+import { CharacterMenuComponent } from "./character-menu/character-menu.component";
+import { InventoryComponent } from "../inventory/inventory.component";
+import { NpcComponent } from "../npc/npc.component";
+import { QuestlogComponent } from "../questlog/questlog.component";
+import { StatsComponent } from "../stats/stats.component";
+import { EquipmentStatsComponent } from "../equipment-stats/equipment-stats.component";
+import { ProfessionStatsComponent } from "../profession-stats/profession-stats.component";
 
 const charRoutes: Routes = [
+    { path: "characters", component: CharacterListComponent, canActivate: [AuthGuard] },
     { path: "characters/new", component: CharacterNewComponent, canActivate: [AuthGuard] },
+    {
+        path: "characters/:id", component: CharacterMenuComponent, canActivate: [AuthGuard], children: [
+            { path: "stats", component: StatsComponent, canActivate: [AuthGuard] },
+            { path: "equipment", component: EquipmentStatsComponent, canActivate: [AuthGuard] },
+            { path: "professions", component: ProfessionStatsComponent, canActivate: [AuthGuard] },
+            { path: "inventory", component: InventoryComponent, canActivate: [AuthGuard] },
+            { path: "npcs", component: NpcComponent, canActivate: [AuthGuard] },
+            { path: "quests", component: QuestlogComponent, canActivate: [AuthGuard] }
+        ]
+    },
     { path: "characters/:id/edit", component: CharacterEditComponent, canActivate: [AuthGuard] },
-    { path: "characters", component: CharacterListComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
     declarations: [
         CharacterListComponent,
         CharacterEditComponent,
-        CharacterNewComponent
+        CharacterNewComponent,
+        CharacterMenuComponent
     ],
     imports: [
         CommonModule,

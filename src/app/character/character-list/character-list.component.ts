@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 import { CharacterService } from "../character.service";
 import { Character } from "../character.models";
@@ -6,17 +7,24 @@ import { Character } from "../character.models";
 @Component({
   selector: "app-character-list",
   templateUrl: "./character-list.component.html",
-  styleUrls: ["./character-list.component.css"]
+  styleUrls: ["./character-list.component.scss"]
 })
 export class CharacterListComponent implements OnInit {
 
   characters: Character[] = [];
+  charactersFetched = false;
 
-  constructor(private characterService: CharacterService) { }
+  constructor(private characterService: CharacterService,
+  private router: Router) { }
 
   ngOnInit() {
     this.characterService.getCharacters().then(
-      (characters: Character[]) => this.characters = characters
+      (characters: Character[]) => {
+        if (characters !== null) {
+          this.characters = characters;
+        }
+        this.charactersFetched = true;
+      }
     );
   }
 
@@ -25,6 +33,11 @@ export class CharacterListComponent implements OnInit {
       () => { },
       (error) => { console.log("Save Error:", error); },
     );
+  }
+
+  onSelectCharacter(charId: number) {
+    this.characterService.setCharacterSelected(charId);
+    this.router.navigate(["/characters", charId, "stats"]);
   }
 
   onDeleteCharacter(id: number) {

@@ -1,0 +1,106 @@
+// Character styles
+
+.character-menu a {
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px 0;
+}
+
+.character-menu a.active {
+    border: none;        
+}
+
+.character-menu a:hover {
+    border: none;        
+}
+
+// Mobile styles
+
+@media (min-width: 768px) {
+    .character-menu {
+        display: flex;
+    }
+    
+    .character-menu a {
+        box-sizing: border-box;
+        width: 25%;
+    }
+        
+}
+
+
+// Character stat styles
+
+
+.stat {
+    margin-bottom: 20px;
+    padding: 10px;
+}
+.stat-weapon {
+    background-color: #FFF59D;
+}
+.stat-ranged {
+    background-color: #C5E1A5;
+}
+.stat-armor {
+    background-color: #B0BEC5;
+}
+
+.stat-secondary {
+    background-color: #9FA8DA;
+}
+.stat p {
+    text-align: center;
+    font-weight: bold;
+    text-transform: capitalize;
+
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.stat span {
+    display: block;
+    padding: 10px;
+
+    font-size: 2em;
+}
+
+.stat .button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px;
+}
+
+@media (min-width: 400px) {
+    .stat-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+@media (min-width: 400px) and (max-width: 600px) {
+    .stat {
+        box-sizing: border-box;
+        width: 48%;
+        margin-right: 2%;
+    }
+    .stat:nth-of-type(2n+2) {
+        margin-right: 0;
+    }
+}
+
+@media (min-width: 600px) {
+    .stat {
+        box-sizing: border-box;        
+        width: 32%;
+        margin-right: 2%;
+    }
+    .stat:nth-of-type(3n+3) {
+        margin-right: 0;
+    }
+}

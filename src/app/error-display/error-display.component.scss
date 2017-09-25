@@ -1,0 +1,17 @@
+@import '~sass/variables';
+
+p {
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+
+    background-color: #ED4337;
+    color: #fff;
+    cursor: pointer;
+}

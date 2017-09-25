@@ -1,0 +1,45 @@
+.inventory {
+    margin-top: 10px;
+}
+.inventory-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);    
+}
+.inventory-item.complete {
+    background-color: #C0C0C0;
+}
+.inventory-item-name {
+    text-transform: lowercase;
+    margin-bottom: 5px;    
+}
+.inventory-item-name:first-letter{
+    text-transform: uppercase;
+}
+.inventory-item-name {
+    font-weight: bold;
+}
+.inventory-buttons {
+    text-align: center;
+    padding-top: 20px;
+    
+}
+@media (min-width: 768px) {
+    .inventory {
+    }
+    .inventory-item {
+        display: flex;
+    }
+    .inventory-item-name, .inventory-buttons {
+        width: 20%;
+    }
+    .inventory-item-description {
+        width: 60%;
+    }
+    .inventory-buttons {
+        text-align: right;
+        padding: 0;
+    }
+}

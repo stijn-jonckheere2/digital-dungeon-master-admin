@@ -1,0 +1,32 @@
+<p *ngIf="!character">Loading character...</p>
+
+<ng-container *ngIf="character">
+  <h2>Primary Stats</h2>
+  <div class="stat-wrapper">
+    <div class="stat stat-primary" *ngFor="let stat of character.primaryStats; let statIndex = index">
+      <p>{{ stat.name }}</p>
+      <div class="button-wrapper">
+        <button *ngIf="allowEdit" class="btn btn-primary" (click)="incrementStat('primary', statIndex)" [disabled]="stat.level === 20">+</button>
+        <span>{{ stat.level }}</span>
+        <button *ngIf="allowEdit" class="btn btn-danger" (click)="decrementStat('primary', statIndex)" [disabled]="stat.level === 0">-</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>Secondary Stats</h2>
+  <div class="stat-wrapper">
+    <div class="stat stat-secondary" *ngFor="let stat of character.secondaryStats; let statIndex = index">
+      <p>{{ stat.name }}</p>
+      <div class="button-wrapper">
+        <button *ngIf="allowEdit" class="btn btn-primary" (click)="incrementStat('secondary', statIndex)" [disabled]="stat.level === 20">+</button>
+        <span>{{ stat.level }}</span>
+        <button *ngIf="allowEdit" class="btn btn-danger" (click)="decrementStat('secondary', statIndex)" [disabled]="stat.level === 3">-</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="button-wrapper">
+    <button class="btn btn-primary" (click)="enableEdit()" [disabled]="allowEdit">Edit</button>
+    <button class="btn btn-primary" (click)="onSave()">Save</button>
+  </div>
+</ng-container>

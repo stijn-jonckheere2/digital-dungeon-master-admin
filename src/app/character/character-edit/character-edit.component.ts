@@ -7,7 +7,7 @@ import { Character } from "../character.models";
 @Component({
   selector: "app-character-edit",
   templateUrl: "./character-edit.component.html",
-  styleUrls: ["./character-edit.component.css"]
+  styleUrls: ["./character-edit.component.scss"]
 })
 export class CharacterEditComponent implements OnInit {
 

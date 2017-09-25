@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-character-new",
   templateUrl: "./character-new.component.html",
-  styleUrls: ["./character-new.component.css"]
+  styleUrls: ["./character-new.component.scss"]
 })
 export class CharacterNewComponent implements OnInit {
 
@@ -20,6 +20,10 @@ export class CharacterNewComponent implements OnInit {
 
   onSaveCharacter() {
     this.characterService.addCharacter(this.character);
+    this.router.navigate(["/characters"]);
+  }
+
+  onCancel() {
     this.router.navigate(["/characters"]);
   }
 

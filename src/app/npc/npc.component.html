@@ -1,0 +1,34 @@
+<h2>NPCs</h2>
+<ng-container *ngIf="npcFormEnabled === false">
+    <div class="inventory" *ngIf="character.npcList && character.npcList.length > 0">
+      <div class="inventory-item" *ngFor="let npc of character.npcList.reverse(); let npcIndex = index">
+        <p class="inventory-item-name">
+          {{ npc.name }}
+        </p>
+        <p class="inventory-item-description">
+          {{ npc.description }}
+        </p>
+        <div class="inventory-buttons">
+          <button class="btn btn-primary" (click)="editNpc(npcIndex, npc)">Edit</button>
+          <button class="btn btn-danger" (click)="removeNpc(npcIndex)">Remove</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="button-wrapper">
+      <button class="btn btn-primary" (click)="enableAddNpc()">Add new npc</button>
+    </div>
+  </ng-container>
+  
+  <div *ngIf="npcFormEnabled === true">
+    <div class="form-group">
+      <label for="name">name</label>
+      <input type="text" id="name" class="form-control" [(ngModel)]="newNpc.name" />
+    </div>
+    <div class="form-group">
+      <label for="description">description</label>
+      <textarea rows="10" id="description" class="form-control" [(ngModel)]="newNpc.description"></textarea>
+    </div>
+    <button class="btn btn-primary" (click)="saveNpc()">Save</button>
+    <a (click)="cancelAddNpc()" class="btn btn-default">Cancel</a>
+  </div>
