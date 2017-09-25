@@ -9,12 +9,12 @@ export class ErrorService {
 
   displayError(message: string) {
     this.errorEvent.emit(message);
-    console.log("Sent out error", message);
+    // console.log("Sent out error", message);
   }
 
   dismissError() {
     this.errorDismissed.emit();
-    console.log("Dismissed error");
+    // console.log("Dismissed error");
   }
 
 }

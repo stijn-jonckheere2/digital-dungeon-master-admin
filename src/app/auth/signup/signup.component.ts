@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
     const repeatPassword = form.value.repeatPassword;
-    console.log("Passes", password, repeatPassword);
+    // console.log("Passes", password, repeatPassword);
 
     if ((password !== repeatPassword)) {
       this.errorService.displayError("You're password and repeat-password don't match!");

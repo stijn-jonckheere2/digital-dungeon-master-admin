@@ -49,7 +49,7 @@ export class CharacterService {
                         if (characters !== null) {
                             this.characters = characters;
                         }
-                        console.log("FetchCharacters", this.characters);
+                        // console.log("FetchCharacters", this.characters);
                         this.charactersFetched = true;
                         resolve();
                     },
@@ -64,7 +64,6 @@ export class CharacterService {
     }
 
     getCharacters() {
-        console.log("CharacterService - GetCharacters - ", this.charactersFetched);
         const promise = new Promise(
             (resolve, reject) => {
                 if (this.charactersFetched) {

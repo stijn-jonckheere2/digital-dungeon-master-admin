@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 
 import { CharacterService } from "../character.service";
 import { Character } from "../character.models";
+import { ErrorService } from "../../error-service.service";
 
 @Component({
   selector: "app-character-list",
@@ -15,10 +16,10 @@ export class CharacterListComponent implements OnInit {
   charactersFetched = false;
 
   constructor(private characterService: CharacterService,
-  private router: Router) { }
+  private router: Router,
+  private errorService: ErrorService ) { }
 
   ngOnInit() {
-    console.log("CharacterListComponent - OnInit", this.characters, this.charactersFetched);
     this.characterService.getCharacters().then(
       (characters: Character[]) => {
         if (characters !== null) {
@@ -32,7 +33,7 @@ export class CharacterListComponent implements OnInit {
   onSave() {
     this.characterService.saveCharacters(this.characters).subscribe(
       () => { },
-      (error) => { console.log("Save Error:", error); },
+      (error) => { this.errorService.displayError(error.json().error); },
     );
   }
 
