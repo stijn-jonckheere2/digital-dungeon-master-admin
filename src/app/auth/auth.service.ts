@@ -5,6 +5,7 @@ import { Injectable, EventEmitter } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
 import { ErrorService } from "../error-service.service";
+import { CharacterService } from "../character/character.service";
 
 @Injectable()
 export class AuthService {
@@ -22,7 +23,7 @@ export class AuthService {
       () => this.signinUser(email, password)
       )
       .catch(
-        error => this.errorService.displayError(error.message)
+      error => this.errorService.displayError(error.message)
       );
   }
 
@@ -51,24 +52,27 @@ export class AuthService {
   }
 
   logout() {
-    firebase.auth().signOut();
-    this.token = null;
-    this.authChangedEvent.emit(false);
+    firebase.auth().signOut().then(
+      () => {
+        this.token = null;
+        this.authChangedEvent.emit(false);
 
-    localStorage.removeItem("digital-dungeon-master-auth-user");
-    localStorage.removeItem("digital-dungeon-master-auth-token");
-    this.router.navigate(["/login"]);
+        localStorage.removeItem("digital-dungeon-master-auth-user");
+        localStorage.removeItem("digital-dungeon-master-auth-token");
+        this.router.navigate(["/login"]);
+      }
+    );
   }
 
   getUserId() {
     const user = localStorage.getItem("digital-dungeon-master-auth-user");
-    console.log("Acquired auth user: ", user);
+    // console.log("Acquired auth user: ", user);
     return user;
   }
 
   getToken() {
     const token = localStorage.getItem("digital-dungeon-master-auth-token");
-    console.log("Acquired auth token: ", token);
+    // console.log("Acquired auth token: ", token);
     return token;
   }
 

@@ -28,14 +28,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authListener = this.authService.authChangedEvent.subscribe(
       (state: boolean) => {
         this.authenticated = state;
-        console.log("Header auth result", this.authenticated);
+        // console.log("Header auth result", this.authenticated);
       }
     );
 
     this.charListener = this.characterService.characterSelection.subscribe(
       (charId: number) => {
         this.selectedChar = charId;
-        console.log("Header char selected", charId);
+        // console.log("Header char selected", charId);
       }
     );
   }
@@ -57,6 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onLogout() {
     this.mobileMenuOpen = false;
     this.characterService.unsetCharacterSelected();
+    this.characterService.clear();
     this.authService.logout();
   }
 

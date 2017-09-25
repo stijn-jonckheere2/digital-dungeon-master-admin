@@ -15,7 +15,6 @@ export class CharacterService {
     constructor(private authService: AuthService,
         private http: Http,
         private errorService: ErrorService) {
-
     }
 
     // Service Methods
@@ -50,6 +49,7 @@ export class CharacterService {
                         if (characters !== null) {
                             this.characters = characters;
                         }
+                        console.log("FetchCharacters", this.characters);
                         this.charactersFetched = true;
                         resolve();
                     },
@@ -64,6 +64,7 @@ export class CharacterService {
     }
 
     getCharacters() {
+        console.log("CharacterService - GetCharacters - ", this.charactersFetched);
         const promise = new Promise(
             (resolve, reject) => {
                 if (this.charactersFetched) {
@@ -220,5 +221,12 @@ export class CharacterService {
     deleteAbility(charId: number, abilityId: number) {
         this.characters[charId].abilities.splice(abilityId, 1);
         this.updateCharacterById(charId, this.characters[charId]);
+    }
+
+    // Reset the service (clear)
+
+    clear() {
+        this.characters = [];
+        this.charactersFetched = false;
     }
 }

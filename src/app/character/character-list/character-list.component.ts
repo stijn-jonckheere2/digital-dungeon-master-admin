@@ -18,6 +18,7 @@ export class CharacterListComponent implements OnInit {
   private router: Router) { }
 
   ngOnInit() {
+    console.log("CharacterListComponent - OnInit", this.characters, this.charactersFetched);
     this.characterService.getCharacters().then(
       (characters: Character[]) => {
         if (characters !== null) {
