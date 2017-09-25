@@ -1,6 +1,6 @@
 <h2>Combat Abilities</h2>
 <ng-container *ngIf="abilityFormEnabled === false">
-  <div class="inventory" *ngIf="character.abilities && character.abilities.length > 0">
+  <div class="inventory" *ngIf="character && character.abilities && character.abilities.length > 0">
     <div [ngClass]="{'inventory-hidden': ability.isFlavourAbility}" class="inventory-item" *ngFor="let ability of character.abilities; let abilityIndex = index">
       <ng-container *ngIf="!ability.isFlavourAbility">
         <p class="inventory-item-name">
@@ -18,7 +18,7 @@
     </div>
   </div>
   <h2 style="margin-top: 40px">Flavour Abilities</h2>
-  <div class="inventory" *ngIf="character.abilities && character.abilities.length > 0">
+  <div class="inventory" *ngIf="character && character.abilities && character.abilities.length > 0">
     <div [ngClass]="{'inventory-hidden': !ability.isFlavourAbility}" class="inventory-item" *ngFor="let ability of character.abilities; let abilityIndex = index">
       <ng-container *ngIf="ability.isFlavourAbility">
         <p class="inventory-item-name">

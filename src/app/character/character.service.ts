@@ -82,7 +82,39 @@ export class CharacterService {
     }
 
     getCharacterById(id: number) {
-        return this.characters[id];
+        const promise = new Promise(
+            (resolve, reject) => {
+                if (this.charactersFetched) {
+                    this.characterSelection.emit(id);
+                    resolve(this.characters[id]);
+                } else {
+                    this.fetchCharacters().then(
+                        () => {
+                            this.characterSelection.emit(id);
+                            resolve(this.characters[id]);
+                        }
+                    );
+                }
+            }
+        );
+        return promise;
+    }
+
+    getCharacterByIdForEdit(id: number) {
+        const promise = new Promise(
+            (resolve, reject) => {
+                if (this.charactersFetched) {
+                    resolve(this.characters[id]);
+                } else {
+                    this.fetchCharacters().then(
+                        () => {
+                            resolve(this.characters[id]);
+                        }
+                    );
+                }
+            }
+        );
+        return promise;
     }
 
     updateCharacterById(id: number, character: Character) {

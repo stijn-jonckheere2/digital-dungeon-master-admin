@@ -1,6 +1,6 @@
 <h2>Quests</h2>
 <ng-container *ngIf="questFormEnabled === false">
-  <div class="inventory" *ngIf="character.questLog && character.questLog.length > 0">
+  <div class="inventory" *ngIf="character && character.questLog && character.questLog.length > 0">
     <div class="inventory-item" *ngFor="let quest of character.questLog let questIndex = index" [ngClass]="{'complete': quest.complete}">
       <p class="inventory-item-name">
         {{ quest.name }}

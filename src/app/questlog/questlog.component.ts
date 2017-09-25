@@ -18,11 +18,23 @@ export class QuestlogComponent implements OnInit {
 
   constructor(private characterService: CharacterService,
     private route: ActivatedRoute) {
-    this.characterId = this.route.parent.snapshot.params["id"];
-    this.character = this.characterService.getCharacterById(this.characterId);
+  }
+
+  loadCharacter() {
+    this.characterService.getCharacterById(this.characterId).then(
+      (char: Character) => {
+        this.character = char;
+        this.handleForm();
+      }
+    );
   }
 
   ngOnInit() {
+    this.characterId = +this.route.parent.snapshot.params["id"];
+    this.loadCharacter();
+  }
+
+  handleForm() {
     if (!this.character.questLog || this.character.questLog.length === 0) {
       this.questFormEnabled = true;
     }

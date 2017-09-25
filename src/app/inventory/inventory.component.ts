@@ -19,15 +19,29 @@ export class InventoryComponent implements OnInit {
 
   constructor(private characterService: CharacterService,
     private route: ActivatedRoute) {
-    this.characterId = this.route.parent.snapshot.params["id"];
-    this.character = this.characterService.getCharacterById(this.characterId);
   }
 
   ngOnInit() {
+    this.characterId = +this.route.parent.snapshot.params["id"];
+    this.loadCharacter();
+
+  }
+
+  loadCharacter() {
+    this.characterService.getCharacterById(this.characterId).then(
+      (char: Character) => {
+        this.character = char;
+        this.handleForm();
+      }
+    );
+  }
+
+  handleForm() {
     if (!this.character.inventory || this.character.inventory.length === 0) {
       this.itemFormEnabled = true;
     }
   }
+
 
   updateInventory() {
     this.character.inventory = this.characterService.getInventory(this.characterId);

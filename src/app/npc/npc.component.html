@@ -1,6 +1,6 @@
 <h2>NPCs</h2>
 <ng-container *ngIf="npcFormEnabled === false">
-    <div class="inventory" *ngIf="character.npcList && character.npcList.length > 0">
+    <div class="inventory" *ngIf="character && character.npcList && character.npcList.length > 0">
       <div class="inventory-item" *ngFor="let npc of character.npcList let npcIndex = index">
         <p class="inventory-item-name">
           {{ npc.name }}

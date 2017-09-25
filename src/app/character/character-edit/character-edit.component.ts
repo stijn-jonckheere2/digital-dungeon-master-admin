@@ -15,12 +15,19 @@ export class CharacterEditComponent implements OnInit {
   charId: number;
 
   constructor(private characterService: CharacterService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private route: ActivatedRoute,
+    private router: Router) {
+  }
+
+  loadCharacter() {
+    this.characterService.getCharacterByIdForEdit(this.charId).then(
+      (char: Character) => this.character = char
+    );
+  }
 
   ngOnInit() {
-    this.charId = +this.activatedRoute.snapshot.params["id"];
-    this.character = this.characterService.getCharacterById(this.charId);
+    this.charId = +this.route.snapshot.params["id"];
+    this.loadCharacter();
   }
 
   onSaveCharacter() {

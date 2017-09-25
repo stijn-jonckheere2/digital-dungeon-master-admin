@@ -18,11 +18,23 @@ export class AbilitiesComponent implements OnInit {
 
   constructor(private characterService: CharacterService,
     private route: ActivatedRoute) {
-    this.characterId = this.route.parent.snapshot.params["id"];
-    this.character = this.characterService.getCharacterById(this.characterId);
   }
 
   ngOnInit() {
+    this.characterId = +this.route.parent.snapshot.params["id"];
+    this.loadCharacter();
+  }
+
+  loadCharacter() {
+    this.characterService.getCharacterById(this.characterId).then(
+      (char: Character) => {
+        this.character = char;
+        this.handleForm();
+      }
+    );
+  }
+
+  handleForm() {
     if (!this.character.abilities || this.character.abilities.length === 0) {
       this.abilityFormEnabled = true;
     }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Character } from "../character/character.models";
 import { CharacterService } from "../character/character.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Params } from "@angular/router";
 
 @Component({
   selector: "app-stats",
@@ -15,11 +15,17 @@ export class StatsComponent implements OnInit {
 
   constructor(private characterService: CharacterService,
     private route: ActivatedRoute) {
-    this.characterId = this.route.parent.snapshot.params["id"];
-    this.character = this.characterService.getCharacterById(this.characterId);
+  }
+
+  loadCharacter() {
+    this.characterService.getCharacterById(this.characterId).then(
+      (char: Character) => this.character = char
+    );
   }
 
   ngOnInit() {
+    this.characterId = +this.route.parent.snapshot.params["id"];
+    this.loadCharacter();
   }
 
   incrementStat(type: string, statIndex: number) {

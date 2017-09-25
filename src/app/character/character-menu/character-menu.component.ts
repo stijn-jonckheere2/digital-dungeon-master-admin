@@ -15,12 +15,17 @@ export class CharacterMenuComponent implements OnInit {
 
   constructor(private characterService: CharacterService,
     private route: ActivatedRoute) {
-      this.characterId = this.route.snapshot.params["id"];
-      this.character = this.characterService.getCharacterById(this.characterId);
+  }
+
+  loadCharacter() {
+    this.characterService.getCharacterById(this.characterId).then(
+      (char: Character) => this.character = char
+    );
   }
 
   ngOnInit() {
-
+    this.characterId = +this.route.parent.snapshot.params["id"];
+    this.loadCharacter();
   }
 
 }
