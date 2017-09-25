@@ -6,9 +6,9 @@
     <div class="stat stat-primary" *ngFor="let stat of character.primaryStats; let statIndex = index">
       <p>{{ stat.name }}</p>
       <div class="button-wrapper">
-        <button *ngIf="allowEdit" class="btn btn-primary" (click)="incrementStat('primary', statIndex)" [disabled]="stat.level === 20">+</button>
+        <button *ngIf="allowEdit" class="btn btn-danger btn-small" (click)="decrementStat('primary', statIndex)" [disabled]="stat.level === 0">-</button>
         <span>{{ stat.level }}</span>
-        <button *ngIf="allowEdit" class="btn btn-danger" (click)="decrementStat('primary', statIndex)" [disabled]="stat.level === 0">-</button>
+        <button *ngIf="allowEdit" class="btn btn-primary btn-small" (click)="incrementStat('primary', statIndex)" [disabled]="stat.level === 20">+</button>
       </div>
     </div>
   </div>
@@ -18,9 +18,9 @@
     <div class="stat stat-secondary" *ngFor="let stat of character.secondaryStats; let statIndex = index">
       <p>{{ stat.name }}</p>
       <div class="button-wrapper">
-        <button *ngIf="allowEdit" class="btn btn-primary" (click)="incrementStat('secondary', statIndex)" [disabled]="stat.level === 20">+</button>
+        <button *ngIf="allowEdit" class="btn btn-danger btn-small" (click)="decrementStat('secondary', statIndex)" [disabled]="stat.level === 3">-</button>
         <span>{{ stat.level }}</span>
-        <button *ngIf="allowEdit" class="btn btn-danger" (click)="decrementStat('secondary', statIndex)" [disabled]="stat.level === 3">-</button>
+        <button *ngIf="allowEdit" class="btn btn-primary btn-small" (click)="incrementStat('secondary', statIndex)" [disabled]="stat.level === 20">+</button>
       </div>
     </div>
   </div>

@@ -16,6 +16,7 @@ import { QuestlogComponent } from "../questlog/questlog.component";
 import { StatsComponent } from "../stats/stats.component";
 import { EquipmentStatsComponent } from "../equipment-stats/equipment-stats.component";
 import { ProfessionStatsComponent } from "../profession-stats/profession-stats.component";
+import { ErrorService } from "../error-service.service";
 
 const charRoutes: Routes = [
     { path: "characters", component: CharacterListComponent, canActivate: [AuthGuard] },
@@ -48,6 +49,7 @@ const charRoutes: Routes = [
     ],
     providers: [
         CharacterService,
+        ErrorService
     ],
     exports: [
         RouterModule

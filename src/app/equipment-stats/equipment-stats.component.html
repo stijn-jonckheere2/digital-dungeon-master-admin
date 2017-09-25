@@ -6,9 +6,9 @@
     <div class="stat stat-weapon" *ngFor="let stat of character.weaponStats; let statIndex = index">
       <p>{{ stat.name }}</p>
       <div class="button-wrapper">
-        <button *ngIf="allowEdit" class="btn btn-primary" (click)="incrementStat('weapon', statIndex)" [disabled]="stat.level === 20">+</button>
+        <button *ngIf="allowEdit" class="btn btn-danger btn-small" (click)="decrementStat('weapon', statIndex)" [disabled]="stat.level === 3">-</button>
         <span>{{ stat.level }}</span>
-        <button *ngIf="allowEdit" class="btn btn-danger" (click)="decrementStat('weapon', statIndex)" [disabled]="stat.level === 3">-</button>
+        <button *ngIf="allowEdit" class="btn btn-primary btn-small" (click)="incrementStat('weapon', statIndex)" [disabled]="stat.level === 20">+</button>
       </div>
     </div>
   </div>

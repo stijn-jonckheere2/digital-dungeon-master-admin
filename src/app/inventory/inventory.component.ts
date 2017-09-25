@@ -30,7 +30,7 @@ export class InventoryComponent implements OnInit {
   }
 
   updateInventory() {
-    this.character.inventory = this.characterService.getInventory(this.characterId).reverse();
+    this.character.inventory = this.characterService.getInventory(this.characterId);
   }
 
   enableAddItem() {

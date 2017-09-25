@@ -3,6 +3,7 @@ import { Injectable, EventEmitter } from "@angular/core";
 import { AuthService } from "../auth/auth.service";
 import { Http } from "@angular/http";
 import { Character, InventoryItem, Npc, Quest } from "./character.models";
+import { ErrorService } from "../error-service.service";
 
 @Injectable()
 export class CharacterService {
@@ -11,7 +12,9 @@ export class CharacterService {
     charactersFetched = false;
     characterSelection = new EventEmitter<number>();
 
-    constructor(private authService: AuthService, private http: Http) {
+    constructor(private authService: AuthService,
+        private http: Http,
+        private errorService: ErrorService) {
 
     }
 
@@ -51,6 +54,7 @@ export class CharacterService {
                         resolve();
                     },
                     (error) => {
+                        this.errorService.displayError(error);
                         reject(error);
                     }
                 );
@@ -85,7 +89,9 @@ export class CharacterService {
         this.characters[id] = character;
         this.saveCharacters(this.characters).subscribe(
             () => { },
-            (error) => { console.log(error); }
+            (error) => {
+                this.errorService.displayError(error);
+            }
         );
     }
 
@@ -93,7 +99,9 @@ export class CharacterService {
         this.characters.push(character);
         this.saveCharacters(this.characters).subscribe(
             () => { },
-            (error) => { console.log(error); }
+            (error) => {
+                this.errorService.displayError(error);
+            }
         );
     }
 
@@ -101,7 +109,9 @@ export class CharacterService {
         this.characters.splice(id, 1);
         this.saveCharacters(this.characters).subscribe(
             () => { },
-            (error) => { console.log(error); }
+            (error) => {
+                this.errorService.displayError(error);
+            }
         );
     }
 

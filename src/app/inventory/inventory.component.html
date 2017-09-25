@@ -1,7 +1,7 @@
 <h2>Inventory</h2>
 <ng-container *ngIf="itemFormEnabled === false">
   <div class="inventory" *ngIf="character.inventory && character.inventory.length > 0">
-    <div class="inventory-item" *ngFor="let item of character.inventory.reverse(); let itemIndex = index">
+    <div class="inventory-item" *ngFor="let item of character.inventory let itemIndex = index">
       <p class="inventory-item-name">
         {{ item.name }}
         <span *ngIf="item.amount > 1">({{ item.amount }})</span>

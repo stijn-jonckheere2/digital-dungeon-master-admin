@@ -1,7 +1,7 @@
 <h2>NPCs</h2>
 <ng-container *ngIf="npcFormEnabled === false">
     <div class="inventory" *ngIf="character.npcList && character.npcList.length > 0">
-      <div class="inventory-item" *ngFor="let npc of character.npcList.reverse(); let npcIndex = index">
+      <div class="inventory-item" *ngFor="let npc of character.npcList let npcIndex = index">
         <p class="inventory-item-name">
           {{ npc.name }}
         </p>
@@ -16,7 +16,7 @@
     </div>
   
     <div class="button-wrapper">
-      <button class="btn btn-primary" (click)="enableAddNpc()">Add new npc</button>
+      <button class="btn btn-primary" (click)="enableAddNpc()">Add new NPC</button>
     </div>
   </ng-container>
   
