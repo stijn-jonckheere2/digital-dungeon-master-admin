@@ -53,10 +53,10 @@ export class QuestlogComponent implements OnInit {
     this.resetQuest();
   }
 
-  editQuest(npcId: number, quest: Quest) {
+  editQuest(questId: number, quest: Quest) {
     this.newQuest = quest;
     this.questFormEnabled = true;
-    this.newQuestId = npcId;
+    this.newQuestId = questId;
   }
 
   removeQuest(npcId: number) {

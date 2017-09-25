@@ -21,6 +21,7 @@ import { StatsComponent } from "./stats/stats.component";
 import { EquipmentStatsComponent } from "./equipment-stats/equipment-stats.component";
 import { ProfessionStatsComponent } from "./profession-stats/profession-stats.component";
 import { ErrorDisplayComponent } from "./error-display/error-display.component";
+import { AbilitiesComponent } from "./abilities/abilities.component";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ErrorDisplayComponent } from "./error-display/error-display.component";
     EquipmentStatsComponent,
     ProfessionStatsComponent,
     ErrorDisplayComponent,
+    AbilitiesComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,9 +18,9 @@
     <div class="stat stat-ranged" *ngFor="let stat of character.rangedStats; let statIndex = index">
       <p>{{ stat.name }}</p>
       <div class="button-wrapper">
-        <button *ngIf="allowEdit" class="btn btn-primary" (click)="incrementStat('ranged', statIndex)" [disabled]="stat.level === 20">+</button>
+        <button *ngIf="allowEdit" class="btn btn-danger btn-small" (click)="decrementStat('ranged', statIndex)" [disabled]="stat.level === 3">-</button>
         <span>{{ stat.level }}</span>
-        <button *ngIf="allowEdit" class="btn btn-danger" (click)="decrementStat('ranged', statIndex)" [disabled]="stat.level === 3">-</button>
+        <button *ngIf="allowEdit" class="btn btn-primary btn-small" (click)="incrementStat('ranged', statIndex)" [disabled]="stat.level === 20">+</button>
       </div>
     </div>
   </div>
@@ -30,9 +30,9 @@
     <div class="stat stat-armor" *ngFor="let stat of character.armorStats; let statIndex = index">
       <p>{{ stat.name }}</p>
       <div class="button-wrapper">
-        <button *ngIf="allowEdit" class="btn btn-primary" (click)="incrementStat('armor', statIndex)" [disabled]="stat.level === 20">+</button>
+        <button *ngIf="allowEdit" class="btn btn-danger btn-small" (click)="decrementStat('armor', statIndex)" [disabled]="stat.level === 3">-</button>
         <span>{{ stat.level }}</span>
-        <button *ngIf="allowEdit" class="btn btn-danger" (click)="decrementStat('armor', statIndex)" [disabled]="stat.level === 3">-</button>
+        <button *ngIf="allowEdit" class="btn btn-primary btn-small" (click)="incrementStat('armor', statIndex)" [disabled]="stat.level === 20">+</button>
       </div>
     </div>
   </div>

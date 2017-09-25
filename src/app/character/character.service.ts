@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from "@angular/core";
 
 import { AuthService } from "../auth/auth.service";
 import { Http } from "@angular/http";
-import { Character, InventoryItem, Npc, Quest } from "./character.models";
+import { Character, InventoryItem, Npc, Quest, Ability } from "./character.models";
 import { ErrorService } from "../error-service.service";
 
 @Injectable()
@@ -54,7 +54,7 @@ export class CharacterService {
                         resolve();
                     },
                     (error) => {
-                        this.errorService.displayError(error);
+                        this.errorService.displayError(error.json().error);
                         reject(error);
                     }
                 );
@@ -90,7 +90,7 @@ export class CharacterService {
         this.saveCharacters(this.characters).subscribe(
             () => { },
             (error) => {
-                this.errorService.displayError(error);
+                this.errorService.displayError(error.json().error);
             }
         );
     }
@@ -100,7 +100,7 @@ export class CharacterService {
         this.saveCharacters(this.characters).subscribe(
             () => { },
             (error) => {
-                this.errorService.displayError(error);
+                this.errorService.displayError(error.json().error);
             }
         );
     }
@@ -110,7 +110,7 @@ export class CharacterService {
         this.saveCharacters(this.characters).subscribe(
             () => { },
             (error) => {
-                this.errorService.displayError(error);
+                this.errorService.displayError(error.message);
             }
         );
     }
@@ -194,6 +194,31 @@ export class CharacterService {
 
     deleteQuest(charId: number, questId: number) {
         this.characters[charId].questLog.splice(questId, 1);
+        this.updateCharacterById(charId, this.characters[charId]);
+    }
+
+    // Ability Methods
+    addAbility(charId: number, ability: Ability) {
+        if (this.characters[charId].abilities) {
+            this.characters[charId].abilities.push(ability);
+        } else {
+            this.characters[charId].abilities = [ability];
+        }
+        this.updateCharacterById(charId, this.characters[charId]);
+    }
+
+    updateAbility(charId: number, abilityId: number, ability: Ability) {
+        const character = this.characters[charId];
+        character.abilities[abilityId] = ability;
+        this.updateCharacterById(charId, character);
+    }
+
+    getAbilities(charId: number) {
+        return this.characters[charId].abilities;
+    }
+
+    deleteAbility(charId: number, abilityId: number) {
+        this.characters[charId].abilities.splice(abilityId, 1);
         this.updateCharacterById(charId, this.characters[charId]);
     }
 }

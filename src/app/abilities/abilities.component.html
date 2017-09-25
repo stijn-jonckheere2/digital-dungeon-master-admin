@@ -1,0 +1,61 @@
+<h2>Combat Abilities</h2>
+<ng-container *ngIf="abilityFormEnabled === false">
+  <div class="inventory" *ngIf="character.abilities && character.abilities.length > 0">
+    <div [ngClass]="{'inventory-hidden': ability.isFlavourAbility}" class="inventory-item" *ngFor="let ability of character.abilities; let abilityIndex = index">
+      <ng-container *ngIf="!ability.isFlavourAbility">
+        <p class="inventory-item-name">
+          {{ ability.name }}
+          <span>({{ ability.usesPerTurn }}/R)</span>
+        </p>
+        <p class="inventory-item-description">
+          {{ ability.description }}
+        </p>
+        <div class="inventory-buttons">
+          <button class="btn btn-primary" (click)="editAbility(abilityIndex, ability)">Edit</button>
+          <button class="btn btn-danger" (click)="removeAbility(abilityIndex)">Remove</button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <h2 style="margin-top: 40px">Flavour Abilities</h2>
+  <div class="inventory" *ngIf="character.abilities && character.abilities.length > 0">
+    <div [ngClass]="{'inventory-hidden': !ability.isFlavourAbility}" class="inventory-item" *ngFor="let ability of character.abilities; let abilityIndex = index">
+      <ng-container *ngIf="ability.isFlavourAbility">
+        <p class="inventory-item-name">
+          {{ ability.name }}
+        </p>
+        <p class="inventory-item-description">
+          {{ ability.description }}
+        </p>
+        <div class="inventory-buttons">
+          <button class="btn btn-primary" (click)="editAbility(abilityIndex, ability)">Edit</button>
+          <button class="btn btn-danger" (click)="removeAbility(abilityIndex)">Remove</button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="button-wrapper">
+    <button class="btn btn-primary" (click)="enableAddAbility()">Add new ability</button>
+  </div>
+</ng-container>
+
+<div *ngIf="abilityFormEnabled === true">
+  <div class="form-group">
+    <label for="name">name</label>
+    <input type="text" id="name" class="form-control" [(ngModel)]="newAbility.name" />
+  </div>
+  <div class="form-group">
+    <label for="description">description</label>
+    <textarea rows="10" id="description" class="form-control" [(ngModel)]="newAbility.description"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="usesPerTurn">uses per turn</label>
+    <input type="number" id="usesPerTurn" class="form-control" [(ngModel)]="newAbility.usesPerTurn" />
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" value="" [(ngModel)]="newAbility.isFlavourAbility">flavour ability</label>
+  </div>
+  <button class="btn btn-primary" (click)="addAbility()">Save</button>
+  <a (click)="cancelAddAbility()" class="btn btn-default">Cancel</a>
+</div>

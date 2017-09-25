@@ -17,6 +17,7 @@ import { StatsComponent } from "../stats/stats.component";
 import { EquipmentStatsComponent } from "../equipment-stats/equipment-stats.component";
 import { ProfessionStatsComponent } from "../profession-stats/profession-stats.component";
 import { ErrorService } from "../error-service.service";
+import { AbilitiesComponent } from "../abilities/abilities.component";
 
 const charRoutes: Routes = [
     { path: "characters", component: CharacterListComponent, canActivate: [AuthGuard] },
@@ -24,6 +25,7 @@ const charRoutes: Routes = [
     {
         path: "characters/:id", component: CharacterMenuComponent, canActivate: [AuthGuard], children: [
             { path: "stats", component: StatsComponent, canActivate: [AuthGuard] },
+            { path: "abilities", component: AbilitiesComponent, canActivate: [AuthGuard] },
             { path: "equipment", component: EquipmentStatsComponent, canActivate: [AuthGuard] },
             { path: "professions", component: ProfessionStatsComponent, canActivate: [AuthGuard] },
             { path: "inventory", component: InventoryComponent, canActivate: [AuthGuard] },

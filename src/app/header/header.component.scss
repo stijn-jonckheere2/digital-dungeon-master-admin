@@ -55,7 +55,7 @@
 .header a {
     text-decoration: none;
     text-align: center;
-    color: #fff;
+    color: #F2F2F2;
     display: block;
     padding: 10px 0;
 }
@@ -75,10 +75,14 @@
             padding: 0;
             text-align: center;
 
+            flex-basis: 15%;
+            flex-grow: 0;
+            flex-shrink: 1;
+
             &.active {
-                border-bottom: 5px solid #fff;
+                border-bottom: 5px solid #F2F2F2;
                 a {
-                    color: #fff; 
+                    color: #F2F2F2; 
                     
                 }
                 a::before, a::after {
@@ -86,7 +90,7 @@
                 }
             }
             a {
-                padding: 20px;
+                padding: 20px 0;
             }
         }
     }

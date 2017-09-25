@@ -13,8 +13,8 @@ body {
     background-color: $background-color;
 
     * {
-        font-family: Calibri, sans-serif;
-        color: #fff;
+        font-family: Arial, sans-serif !important;
+        color: #F2F2F2;
     }
 }
 
@@ -38,6 +38,9 @@ h2 {
 
     text-align: center;
     margin: 20px 0;
+    &:first-of-type {
+        margin-top: 0;
+    }
 }
 h3 {
     font-size: 1.2em;

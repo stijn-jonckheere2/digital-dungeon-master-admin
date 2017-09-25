@@ -1,7 +1,9 @@
 export class Character {
+    public abilities: Ability[];
     public inventory: InventoryItem[];
     public questLog: Quest[];
     public npcList: Npc[];
+
     public primaryStats: CharacterStat[];
     public armorStats: CharacterStat[];
     public weaponStats: CharacterStat[];
@@ -17,6 +19,7 @@ export class Character {
         public description: string,
         public level: number
     ) {
+        this.abilities = [];
         this.inventory = [];
         this.questLog = [];
         this.npcList = [];
@@ -70,6 +73,15 @@ export class Character {
             this.secondaryStats.push(new CharacterStat(stat, 3));
         }
     }
+}
+
+export class Ability {
+    constructor(
+        public name: string,
+        public description: string,
+        public usesPerTurn: number,
+        public isFlavourAbility: boolean
+    ) { }
 }
 
 export class InventoryItem {
