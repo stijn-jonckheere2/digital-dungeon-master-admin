@@ -1,4 +1,6 @@
 export class Character {
+    public gold: number;
+
     public abilities: Ability[];
     public inventory: InventoryItem[];
     public questLog: Quest[];
@@ -17,12 +19,14 @@ export class Character {
         public className: string,
         public age: number,
         public description: string,
-        public level: number
+        public level: number,
     ) {
         this.abilities = [];
         this.inventory = [];
         this.questLog = [];
         this.npcList = [];
+
+        this.gold = 0;
 
         this.generatePrimaryStats();
         this.generateSecondaryStats();

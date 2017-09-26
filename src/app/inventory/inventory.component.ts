@@ -73,4 +73,11 @@ export class InventoryComponent implements OnInit {
     this.updateInventory();
   }
 
+  addGold(amount: number) {
+    this.characterService.addGold(this.characterId, amount);
+  }
+
+  reduceGold(amount: number) {
+    this.characterService.reduceGold(this.characterId, amount);
+  }
 }

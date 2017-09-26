@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 
 import { AuthService } from "../auth/auth.service";
 import { CharacterService } from "../character/character.service";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-header",
@@ -20,9 +20,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
     private characterService: CharacterService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
+    this.route.url.subscribe(
+      (data) => { console.log("Url changed", data); }
+    );
     this.authenticated = this.authService.isAuthenticated();
 
     this.authListener = this.authService.authChangedEvent.subscribe(

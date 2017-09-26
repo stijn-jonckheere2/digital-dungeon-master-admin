@@ -179,6 +179,16 @@ export class CharacterService {
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
+    addGold(charId: number, gold: number) {
+        this.characters[charId].gold += gold;
+        this.updateCharacterById(charId, this.characters[charId]);
+    }
+
+    reduceGold(charId: number, gold: number) {
+        this.characters[charId].gold -= gold;
+        this.updateCharacterById(charId, this.characters[charId]);
+    }
+
     // Npc Methods
     addNpc(charId: number, npc: Npc) {
         if (this.characters[charId].npcList) {

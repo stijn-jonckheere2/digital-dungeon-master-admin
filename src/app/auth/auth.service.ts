@@ -47,7 +47,10 @@ export class AuthService {
       }
       )
       .catch(
-        error => this.errorService.displayError(error.message)
+        error => {
+          console.log(error);
+          this.errorService.displayError(error.message);
+        }
       );
   }
 
