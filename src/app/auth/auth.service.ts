@@ -53,6 +53,15 @@ export class AuthService {
       );
   }
 
+  refreshToken() {
+    // TODO: Figure out how to keep the user signed in when using the app
+    // firebase.auth().currentUser.getIdToken(true).then(
+    //   (token) => {
+    //     localStorage.setItem("digital-dungeon-master-auth-token", token);
+    //   }
+    // );
+  }
+
   logout() {
     firebase.auth().signOut().then(
       () => {
@@ -73,8 +82,8 @@ export class AuthService {
   }
 
   getToken() {
+    this.refreshToken();
     const token = localStorage.getItem("digital-dungeon-master-auth-token");
-    // console.log("Acquired auth token: ", token);
     return token;
   }
 
