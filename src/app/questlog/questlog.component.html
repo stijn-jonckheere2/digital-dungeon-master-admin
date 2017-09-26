@@ -1,7 +1,7 @@
 <h2>Quests</h2>
 <ng-container *ngIf="questFormEnabled === false">
   <div class="inventory" *ngIf="character && character.questLog && character.questLog.length > 0">
-    <div class="inventory-item" *ngFor="let quest of character.questLog let questIndex = index" [ngClass]="{'complete': quest.complete}">
+    <div class="inventory-item" *ngFor="let quest of activeQuestLog" [ngClass]="{'complete': quest.complete}">
       <p class="inventory-item-name">
         {{ quest.name }}
         <span *ngIf="quest.complete">(complete)</span>
@@ -10,8 +10,8 @@
         {{ quest.description }}
       </p>
       <div class="inventory-buttons">
-        <button class="btn btn-primary" (click)="editQuest(questIndex, quest)">Edit</button>
-        <button class="btn btn-danger" (click)="removeQuest(questIndex)">Remove</button>
+        <button class="btn btn-primary" (click)="editQuest(quest.originId, quest)">Edit</button>
+        <button class="btn btn-danger" (click)="removeQuest(quest.originId)">Remove</button>
       </div>
     </div>
   </div>

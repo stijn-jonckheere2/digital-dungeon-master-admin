@@ -15,6 +15,7 @@ export class QuestlogComponent implements OnInit {
   questFormEnabled = false;
   newQuest = new Quest("", "", false);
   newQuestId = -1;
+  activeQuestLog: Quest[];
 
   constructor(private characterService: CharacterService,
     private route: ActivatedRoute) {
@@ -37,11 +38,23 @@ export class QuestlogComponent implements OnInit {
   handleForm() {
     if (!this.character.questLog || this.character.questLog.length === 0) {
       this.questFormEnabled = true;
+    } else {
+      this.updateActiveQuests();
     }
   }
 
   updateQuests() {
     this.character.questLog = this.characterService.getQuests(this.characterId);
+    this.updateActiveQuests();
+  }
+
+  updateActiveQuests() {
+    this.activeQuestLog = this.character.questLog.map((quest, index) => {
+      quest["originId"] = index;
+      return quest;
+    }).sort((a, b) => {
+      return a.complete > b.complete ? 1 : 0;
+    });
   }
 
   enableAddQuest() {

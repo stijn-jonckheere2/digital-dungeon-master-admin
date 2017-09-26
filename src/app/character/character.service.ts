@@ -82,8 +82,6 @@ export class CharacterService {
     }
 
     getCharacterById(id: number) {
-        this.authService.refreshToken();
-
         const promise = new Promise(
             (resolve, reject) => {
                 if (this.charactersFetched) {

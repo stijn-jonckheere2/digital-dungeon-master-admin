@@ -13,6 +13,7 @@ export class AuthService {
   userId: string;
 
   authChangedEvent = new EventEmitter<boolean>();
+  firebaseAuthListener: any;
 
   constructor(private router: Router,
     private errorService: ErrorService) { }
@@ -31,7 +32,7 @@ export class AuthService {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
       response => {
-        firebase.auth().currentUser.getToken()
+        firebase.auth().currentUser.getIdToken()
           .then(
           (token: string) => {
             this.token = token;
@@ -47,19 +48,25 @@ export class AuthService {
       }
       )
       .catch(
-        error => {
-          this.errorService.displayError(error.message);
-        }
+      error => this.errorService.displayError(error.message)
       );
   }
 
-  refreshToken() {
-    // TODO: Figure out how to keep the user signed in when using the app
-    // firebase.auth().currentUser.getIdToken(true).then(
-    //   (token) => {
-    //     localStorage.setItem("digital-dungeon-master-auth-token", token);
-    //   }
-    // );
+  startAuthListening() {
+    this.firebaseAuthListener = firebase.auth().onAuthStateChanged((user: any) => {
+      if (user === null) {
+        this.router.navigate(["/login"]);
+        this.errorService.displayError("Your session has expired. Please login again.");
+      } else {
+        console.log("User found! Refreshing session lifetime!");
+        localStorage.setItem("digital-dungeon-master-auth-user", user.uid);
+        firebase.auth().currentUser.getIdToken(true).then(
+          (token) => {
+            localStorage.setItem("digital-dungeon-master-auth-token", token);
+          }
+        );
+      }
+    });
   }
 
   logout() {
@@ -77,12 +84,10 @@ export class AuthService {
 
   getUserId() {
     const user = localStorage.getItem("digital-dungeon-master-auth-user");
-    // console.log("Acquired auth user: ", user);
     return user;
   }
 
   getToken() {
-    this.refreshToken();
     const token = localStorage.getItem("digital-dungeon-master-auth-token");
     return token;
   }
