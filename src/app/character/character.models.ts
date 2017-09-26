@@ -8,10 +8,10 @@ export class Character {
 
     public primaryStats: CharacterStat[];
     public armorStats: CharacterStat[];
-    public weaponStats: CharacterStat[];
-    public rangedStats: CharacterStat[];
-    public professionStats: CharacterStat[];
-    public secondaryStats: CharacterStat[];
+    public weaponStats: CharacterSecondaryStat[];
+    public rangedStats: CharacterSecondaryStat[];
+    public professionStats: CharacterSecondaryStat[];
+    public secondaryStats: CharacterSecondaryStat[];
 
     constructor(
         public name: string,
@@ -53,28 +53,28 @@ export class Character {
     generateWeaponStats() {
         this.weaponStats = [];
         for (const stat of weaponStatNames) {
-            this.weaponStats.push(new CharacterStat(stat, 3));
+            this.weaponStats.push(new CharacterSecondaryStat(stat[0], 3, stat[1]));
         }
     }
 
     generateRangedStats() {
         this.rangedStats = [];
         for (const stat of rangedStatNames) {
-            this.rangedStats.push(new CharacterStat(stat, 3));
+            this.rangedStats.push(new CharacterSecondaryStat(stat[0], 3, stat[1]));
         }
     }
 
     generateProfessionStats() {
         this.professionStats = [];
         for (const stat of professionStatNames) {
-            this.professionStats.push(new CharacterStat(stat, 3));
+            this.professionStats.push(new CharacterSecondaryStat(stat[0], 3, stat[1]));
         }
     }
 
     generateSecondaryStats() {
         this.secondaryStats = [];
         for (const stat of secondaryStatNames) {
-            this.secondaryStats.push(new CharacterStat(stat, 3));
+            this.secondaryStats.push(new CharacterSecondaryStat(stat[0], 3, stat[1]));
         }
     }
 }
@@ -119,6 +119,14 @@ export class CharacterStat {
     ) { }
 }
 
+export class CharacterSecondaryStat {
+    constructor(
+        public name: string,
+        public level: number,
+        public substats: string
+    ) { }
+}
+
 export const primaryStatNames = [
     "strength",
     "agility",
@@ -139,68 +147,68 @@ export const armorStatNames = [
 ];
 
 export const weaponStatNames = [
-    "Sword",
-    "Axe",
-    "Mace",
-    "2H sword",
-    "2H axe",
-    "2H mace",
-    "Polearm",
-    "Dagger",
-    "Offhand shield",
+    ["Sword", "STR, AGI, INT"],
+    ["Axe", "STR, AGI"],
+    ["Mace", "STR, AGI, INT"],
+    ["2H sword", "STR, AGI"],
+    ["2H axe", "STR"],
+    ["2H mace", "STR"],
+    ["Polearm", "STR, AGI"],
+    ["Dagger", "STR, AGI, INT"],
+    ["Offhand shield", "STR, INT"]
 ];
 
 export const rangedStatNames = [
-    "Shortbow (110 m)",
-    "Longbow (200 m)",
-    "Crossbow (100 m)",
-    "Slingshot (80 m)",
-    "Throwing knife (15 m)",
-    "Staff",
-    "Wand",
-    "Offhand orb",
-    "Offhand tome",
+    ["Shortbow (110 m)", "STR, AGI"],
+    ["Longbow (200 m)", "STR, AGI"],
+    ["Crossbow (100 m)", "STR, AGI"],
+    ["Slingshot (80 m)", "STR, AGI"],
+    ["Throwing knife (15 m)", "STR, AGI"],
+    ["Staff", "STR, AGI, INT"],
+    ["Wand", "INT"],
+    ["Offhand orb", "INT"],
+    ["Offhand tome", "INT"]
 ];
 
 export const professionStatNames = [
-    "Alchemy",
-    "BS armor",
-    "BS weapons",
-    "Fletching",
-    "Tailoring",
-    "Leatherworking",
-    "Runescribe",
-    "Farming",
-    "Hunting",
-    "Trap Making",
+    ["Alchemy", "INT" ],
+    ["BS armor", "STR" ],
+    ["BS weapons", "STR" ],
+    ["Fletching", "STR, AGI" ],
+    ["Tailoring", "STR, AGI, INT" ],
+    ["Leatherworking", "STR, AGI, INT" ],
+    ["Runescribe", "STR, INT" ],
+    ["Farming", "STR, AGI, INT" ],
+    ["Hunting", "STR, AGI" ],
+    ["Trap Making", "STR, AGI" ]
 ].sort();
 
 export const secondaryStatNames = [
-    "Sneaking",
-    "Search",
-    "Speech",
-    "Climb",
-    "Dodge",
-    "Hide",
-    "Throwing",
-    "Unarmed combat",
-    "Fortune Telling",
-    "Bargaining",
-    "Language",
-    "Disguise",
-    "Meditation",
-    "Sleight of hand",
-    "Savenging",
-    "Riding",
-    "Survival",
-    "Burglary",
-    "Lockpicking",
-    "Flirting",
-    "Occultism",
-    "Cosmology",
-    "Net of Contacts",
-    "Information retrieval",
-    "Shadowing",
-    "City/area knowledge",
-    "Medicine"
+    ["Sneaking", "AGI"],
+    ["Search", "PER"],
+    ["Speech", "CHA"],
+    ["Climb", "AGI"],
+    ["Dodge", "AGI"],
+    ["Hide", "AGI"],
+    ["Throwing", "STR"],
+    ["Unarmed combat", "STR"],
+    ["Fortune Telling", "CHA"],
+    ["Bargaining", "CHA"],
+    ["Language", "EDU"],
+    ["Disguise", "AGI"],
+    ["Meditation", "INT"],
+    ["Sleight of hand", "AGI"],
+    ["Savenging", "PER"],
+    ["Riding", "AGI"],
+    ["Survival", "CON"],
+    ["Burglary", "PER"],
+    ["Lockpicking", "AGI"],
+    ["Flirting", "CHA"],
+    ["Occultism", "INT"],
+    ["Cosmology", "EDU"],
+    ["Net of Contacts", "CHA"],
+    ["Information retrieval", "CHA"],
+    ["Shadowing", "PER"],
+    ["City/area knowledge", "EGO"],
+    ["Medicine", "EDU"]
 ].sort();

@@ -16,6 +16,7 @@
   <h2>Secondary Stats</h2>
   <div class="stat-wrapper">
     <div class="stat stat-secondary" *ngFor="let stat of character.secondaryStats; let statIndex = index">
+      <p class="substat">{{ stat.substats }}</p>
       <p>{{ stat.name }}</p>
       <div class="button-wrapper">
         <button *ngIf="allowEdit" class="btn btn-danger btn-small" (click)="decrementStat('secondary', statIndex)" [disabled]="stat.level === 3">-</button>

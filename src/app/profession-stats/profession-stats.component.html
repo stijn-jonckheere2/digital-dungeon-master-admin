@@ -4,6 +4,7 @@
   <h2>Professions</h2>
   <div class="stat-wrapper">
     <div class="stat stat-profession" *ngFor="let stat of character.professionStats; let statIndex = index">
+      <p class="substat">{{ stat.substats }}</p>
       <p>{{ stat.name }}</p>
       <div class="button-wrapper">
         <button *ngIf="allowEdit" class="btn btn-danger btn-small" (click)="decrementStat('profession', statIndex)" [disabled]="stat.level === 3">-</button>

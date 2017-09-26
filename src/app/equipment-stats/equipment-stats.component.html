@@ -4,6 +4,7 @@
   <h2>Melee Weapon Stats</h2>
   <div class="stat-wrapper">
     <div class="stat stat-weapon" *ngFor="let stat of character.weaponStats; let statIndex = index">
+      <p class="substat">{{ stat.substats }}</p>
       <p>{{ stat.name }}</p>
       <div class="button-wrapper">
         <button *ngIf="allowEdit" class="btn btn-danger btn-small" (click)="decrementStat('weapon', statIndex)" [disabled]="stat.level === 3">-</button>
@@ -16,6 +17,7 @@
   <h2>Ranged Weapon Stats</h2>
   <div class="stat-wrapper">
     <div class="stat stat-ranged" *ngFor="let stat of character.rangedStats; let statIndex = index">
+      <p class="substat">{{ stat.substats }}</p>      
       <p>{{ stat.name }}</p>
       <div class="button-wrapper">
         <button *ngIf="allowEdit" class="btn btn-danger btn-small" (click)="decrementStat('ranged', statIndex)" [disabled]="stat.level === 3">-</button>
