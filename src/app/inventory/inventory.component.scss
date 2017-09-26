@@ -4,6 +4,17 @@
 .inventory {
     margin-top: 10px;
 }
+.inventory-gold {
+    .inventory-item-description {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            margin-left: 5px;
+        }
+    }
+}
 .inventory-item {
     margin-bottom: 20px;
     padding: 10px;
@@ -32,6 +43,17 @@
 }
 @media (min-width: 768px) {
     .inventory {
+    }
+    .inventory-gold {
+        .inventory-item-description {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+
+            img {
+                height: 20px !important;
+            }
+        }
     }
     .inventory-item {
         display: flex;

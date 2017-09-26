@@ -48,7 +48,6 @@ export class AuthService {
       )
       .catch(
         error => {
-          console.log(error);
           this.errorService.displayError(error.message);
         }
       );

@@ -15,7 +15,6 @@ export class StatsComponent implements OnInit {
 
   constructor(private characterService: CharacterService,
     private route: ActivatedRoute) {
-    console.log("Route", this.route);
   }
 
   loadCharacter() {

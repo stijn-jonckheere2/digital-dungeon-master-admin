@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 
 import { AuthService } from "../auth/auth.service";
 import { CharacterService } from "../character/character.service";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-header",
@@ -20,27 +20,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
     private characterService: CharacterService,
-    private router: Router,
-    private route: ActivatedRoute) {
+    private router: Router) {
   }
 
   ngOnInit() {
-    this.route.url.subscribe(
-      (data) => { console.log("Url changed", data); }
-    );
     this.authenticated = this.authService.isAuthenticated();
 
     this.authListener = this.authService.authChangedEvent.subscribe(
       (state: boolean) => {
         this.authenticated = state;
-        // console.log("Header auth result", this.authenticated);
       }
     );
 
     this.charListener = this.characterService.characterSelection.subscribe(
       (charId: number) => {
         this.selectedChar = charId;
-        // console.log("Header char selected", charId);
       }
     );
   }

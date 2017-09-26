@@ -4,6 +4,7 @@
     <p class="inventory-item-name">Gold</p>
     <p class="inventory-item-description">
       <span>{{ character.gold }}</span>
+      <img src="/assets/images/gold-coins.png" height="50px"/>
     </p>
     <div class="inventory-buttons">
       <button class="btn btn-primary btn-small" (click)="reduceGold(50)" [disabled]="character.gold <= 50">- 50</button>
