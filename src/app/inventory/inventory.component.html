@@ -3,11 +3,11 @@
   <div class="inventory-item">
     <p class="inventory-item-name">Gold</p>
     <p class="inventory-item-description">
-      <span>{{ character.gold }}</span>      
+      <span>{{ character.gold }}</span>
     </p>
     <div class="inventory-buttons">
-      <button class="btn btn-primary btn-small" (click)="reduceGold(10)" [disabled]="character.gold < 10">- 10</button>
       <button class="btn btn-primary btn-small" (click)="reduceGold(50)" [disabled]="character.gold <= 50">- 50</button>
+      <button class="btn btn-primary btn-small" (click)="reduceGold(10)" [disabled]="character.gold < 10">- 10</button>
       <button class="btn btn-danger btn-small" (click)="addGold(10)">+ 10</button>
       <button class="btn btn-danger btn-small" (click)="addGold(50)">+ 50</button>
     </div>
