@@ -17,7 +17,7 @@
       </ng-container>
     </div>
   </div>
-  <h2 style="margin-top: 40px">Flavour Abilities</h2>
+  <h2 style="margin-top: 40px" *ngIf="character && character.abilities && character.abilities.length > 0">Flavour Abilities</h2>
   <div class="inventory" *ngIf="character && character.abilities && character.abilities.length > 0">
     <div [ngClass]="{'inventory-hidden': !ability.isFlavourAbility}" class="inventory-item" *ngFor="let ability of character.abilities; let abilityIndex = index">
       <ng-container *ngIf="ability.isFlavourAbility">
