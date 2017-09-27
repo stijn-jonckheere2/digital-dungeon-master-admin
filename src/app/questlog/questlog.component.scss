@@ -37,6 +37,10 @@
 }
 @media (min-width: 768px) {
     .inventory {
+        margin-top: 0;
+        &:first-of-type {
+            margin-bottom: 40px;
+        }
     }
     .inventory-item {
         display: flex;

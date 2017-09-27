@@ -2,7 +2,7 @@
 
 <p *ngIf="!charactersFetched">Loading...</p>
 
-<p *ngIf="charactersFetched && characters.length === 0">You don't have any characters yet</p>
+<p *ngIf="charactersFetched && characters.length === 0" style="margin-bottom: 20px; text-align: center">You don't have any characters yet</p>
 
 <ng-container *ngIf="charactersFetched && characters.length > 0">
     <div class="characterView">

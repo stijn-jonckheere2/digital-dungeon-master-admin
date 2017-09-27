@@ -47,10 +47,11 @@ export class CharacterService {
                     (response) => {
                         const characters = response.json();
                         if (characters !== null) {
-                            this.characters = characters;
+                            console.log("got chars", characters);
+                            this.convertCharacters(characters);
                         }
-                        // console.log("FetchCharacters", this.characters);
                         this.charactersFetched = true;
+                        console.log("characters fetched", this.characters);
                         resolve();
                     },
                     (error) => {
@@ -61,6 +62,12 @@ export class CharacterService {
             }
         );
         return fetchPromise;
+    }
+
+    convertCharacters(characters) {
+        this.characters = characters.map((char, index) => {
+            return Character.fromJSON(char);
+        });
     }
 
     getCharacters() {
@@ -217,11 +224,10 @@ export class CharacterService {
     // Questlog Methods
     addQuest(charId: number, quest: Quest) {
         if (this.characters[charId].questLog) {
-            this.characters[charId].questLog.push(quest);
+            this.characters[charId].questLog.unshift(quest);
         } else {
             this.characters[charId].questLog = [quest];
-        }
-        this.updateCharacterById(charId, this.characters[charId]);
+        }        this.updateCharacterById(charId, this.characters[charId]);
     }
 
     getQuests(charId: number) {

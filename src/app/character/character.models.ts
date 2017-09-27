@@ -1,4 +1,34 @@
-export class Character {
+class Serializable {
+    static fromJSON(jsonObj: Character) {
+        const convertedChar = new Character(
+            jsonObj.name,
+            jsonObj.race,
+            jsonObj.className,
+            jsonObj.age,
+            jsonObj.description,
+            jsonObj.level
+        );
+
+        convertedChar.gold = jsonObj.gold;
+
+        convertedChar.abilities = jsonObj.abilities;
+        convertedChar.inventory = jsonObj.inventory;
+        convertedChar.questLog = jsonObj.questLog;
+        convertedChar.npcList = jsonObj.npcList;
+
+        convertedChar.primaryStats = jsonObj.primaryStats;
+        convertedChar.secondaryStats = jsonObj.secondaryStats;
+
+        convertedChar.weaponStats = jsonObj.weaponStats;
+        convertedChar.armorStats = jsonObj.armorStats;
+        convertedChar.rangedStats = jsonObj.rangedStats;
+        convertedChar.professionStats = jsonObj.professionStats;
+
+        return convertedChar;
+    }
+}
+
+export class Character extends Serializable {
     public gold: number;
 
     public abilities: Ability[];
@@ -21,6 +51,8 @@ export class Character {
         public description: string,
         public level: number,
     ) {
+        super();
+
         this.abilities = [];
         this.inventory = [];
         this.questLog = [];
@@ -77,6 +109,44 @@ export class Character {
             this.secondaryStats.push(new CharacterSecondaryStat(stat[0], 3, stat[1]));
         }
     }
+
+    public getQuests = function () {
+        const quests: Quest[] = [];
+
+        for (const quest in this.questLog) {
+            if (!this.questLog[quest].complete) {
+                this.questLog[quest]["originId"] = quest;
+                quests.push(this.questLog[quest]);
+            }
+        }
+
+        if (quests.length > 0) {
+            return quests.sort((a, b) => {
+                return a.dateAdded < b.dateAdded ? 1 : 0;
+            });
+        } else {
+            return quests;
+        }
+    };
+
+    public getCompletedQuests = function () {
+        const completedQuests: Quest[] = [];
+
+        for (const quest in this.questLog) {
+            if (this.questLog[quest].complete) {
+                this.questLog[quest]["originId"] = quest;
+                completedQuests.push(this.questLog[quest]);
+            }
+        }
+
+        if (completedQuests.length > 0) {
+            return completedQuests.sort((a, b) => {
+                return a.dateAdded < b.dateAdded ? 1 : 0;
+            });
+        } else {
+            return completedQuests;
+        }
+    };
 }
 
 export class Ability {
@@ -98,11 +168,20 @@ export class InventoryItem {
 }
 
 export class Quest {
+    public dateAdded: Date;
+    public dateCompleted: Date;
+
     constructor(
         public name: string,
         public description: string,
         public complete: boolean,
-    ) { }
+    ) {
+        this.dateAdded = new Date();
+    }
+
+    completeQuest() {
+        this.dateCompleted = new Date();
+    }
 }
 
 export class Npc {
@@ -171,16 +250,16 @@ export const rangedStatNames = [
 ];
 
 export const professionStatNames = [
-    ["Alchemy", "INT" ],
-    ["BS armor", "STR" ],
-    ["BS weapons", "STR" ],
-    ["Fletching", "STR, AGI" ],
-    ["Tailoring", "STR, AGI, INT" ],
-    ["Leatherworking", "STR, AGI, INT" ],
-    ["Runescribe", "STR, INT" ],
-    ["Farming", "STR, AGI, INT" ],
-    ["Hunting", "STR, AGI" ],
-    ["Trap Making", "STR, AGI" ]
+    ["Alchemy", "INT"],
+    ["BS armor", "STR"],
+    ["BS weapons", "STR"],
+    ["Fletching", "STR, AGI"],
+    ["Tailoring", "STR, AGI, INT"],
+    ["Leatherworking", "STR, AGI, INT"],
+    ["Runescribe", "STR, INT"],
+    ["Farming", "STR, AGI, INT"],
+    ["Hunting", "STR, AGI"],
+    ["Trap Making", "STR, AGI"]
 ].sort();
 
 export const secondaryStatNames = [

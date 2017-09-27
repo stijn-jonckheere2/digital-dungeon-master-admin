@@ -31,15 +31,8 @@ export class InventoryComponent implements OnInit {
     this.characterService.getCharacterById(this.characterId).then(
       (char: Character) => {
         this.character = char;
-        this.handleForm();
       }
     );
-  }
-
-  handleForm() {
-    if (!this.character.inventory || this.character.inventory.length === 0) {
-      this.itemFormEnabled = true;
-    }
   }
 
 
@@ -75,9 +68,11 @@ export class InventoryComponent implements OnInit {
 
   addGold(amount: number) {
     this.characterService.addGold(this.characterId, amount);
+    this.characterService.updateCharacterById(this.characterId, this.character);
   }
 
   reduceGold(amount: number) {
     this.characterService.reduceGold(this.characterId, amount);
+    this.characterService.updateCharacterById(this.characterId, this.character);
   }
 }

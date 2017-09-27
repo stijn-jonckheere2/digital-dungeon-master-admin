@@ -11,11 +11,14 @@ import { ActivatedRoute } from "@angular/router";
 export class QuestlogComponent implements OnInit {
   character: Character;
   characterId: number;
+  completedVisible = false;
 
   questFormEnabled = false;
   newQuest = new Quest("", "", false);
   newQuestId = -1;
-  activeQuestLog: Quest[];
+
+  activeQuestLog: Quest[] = [];
+  completedQuestLog: Quest[] = [];
 
   constructor(private characterService: CharacterService,
     private route: ActivatedRoute) {
@@ -25,6 +28,7 @@ export class QuestlogComponent implements OnInit {
     this.characterService.getCharacterById(this.characterId).then(
       (char: Character) => {
         this.character = char;
+        console.log("QC: Loaded char", char);
         this.handleForm();
       }
     );
@@ -43,18 +47,18 @@ export class QuestlogComponent implements OnInit {
     }
   }
 
+  toggleCompleted() {
+    this.completedVisible = !this.completedVisible;
+  }
+
   updateQuests() {
     this.character.questLog = this.characterService.getQuests(this.characterId);
     this.updateActiveQuests();
   }
 
   updateActiveQuests() {
-    this.activeQuestLog = this.character.questLog.map((quest, index) => {
-      quest["originId"] = index;
-      return quest;
-    }).sort((a, b) => {
-      return a.complete > b.complete ? 1 : 0;
-    });
+    this.activeQuestLog = this.character.getQuests();
+    this.completedQuestLog = this.character.getCompletedQuests();
   }
 
   enableAddQuest() {

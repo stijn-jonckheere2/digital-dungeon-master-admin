@@ -1,7 +1,22 @@
 <h2>Quests</h2>
 <ng-container *ngIf="questFormEnabled === false">
   <div class="inventory" *ngIf="character && character.questLog && character.questLog.length > 0">
-    <div class="inventory-item" *ngFor="let quest of activeQuestLog" [ngClass]="{'complete': quest.complete}">
+    <div class="inventory-item" *ngFor="let quest of activeQuestLog">
+      <p class="inventory-item-name">
+        {{ quest.name }}
+      </p>
+      <p class="inventory-item-description">
+        {{ quest.description }}
+      </p>
+      <div class="inventory-buttons">
+        <button class="btn btn-primary" (click)="editQuest(quest.originId, quest)">Edit</button>
+        <button class="btn btn-danger" (click)="removeQuest(quest.originId)">Remove</button>
+      </div>
+    </div>
+  </div>
+  <h2 *ngIf="completedVisible && character && character.questLog && completedQuestLog.length > 0">Completed</h2>
+  <div class="inventory" *ngIf="completedVisible && character && character.questLog && completedQuestLog.length > 0">
+    <div class="inventory-item" *ngFor="let quest of completedQuestLog" [ngClass]="{'complete': quest.complete}">
       <p class="inventory-item-name">
         {{ quest.name }}
         <span *ngIf="quest.complete">(complete)</span>
@@ -18,6 +33,9 @@
 
   <div class="button-wrapper">
     <button class="btn btn-primary" (click)="enableAddQuest()">Add new quest</button>
+    <button class="btn btn-primary" (click)="toggleCompleted()" *ngIf="!completedVisible">Show completed quests</button>
+    <button class="btn btn-primary" (click)="toggleCompleted()" *ngIf="completedVisible">Hide completed quests</button>
+
   </div>
 </ng-container>
 
