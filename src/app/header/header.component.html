@@ -18,12 +18,13 @@
     </li>
     <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'stats']">Stats</a></li>
     <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'abilities']">Abilities</a></li>
-    <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'equipment']">Equipment</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'equipment']">Gear</a></li>
     <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'professions']">Professions</a></li>
     <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'inventory']">Inventory</a></li>
     <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'quests']">Quests</a></li>
     <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'npcs']">NPCs</a></li>
-    <li class="nav-dark"><a (click)="unselectCharacter()">Characters</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'logs']">Logs</a></li>    
+    <li class="nav-dark"><a (click)="unselectCharacter()">Chars</a></li>
     <li class="nav-dark"><a (click)="onLogout()">Logout</a></li>
   </ul>
 </div>

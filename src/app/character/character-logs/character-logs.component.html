@@ -1,0 +1,15 @@
+<h2>Logs</h2>
+
+<p *ngIf="!character">Loading...</p>
+<p *ngIf="character && character.logs.length === 0">No logs yet for this character</p>
+
+<div class="logs-wrapper" *ngIf="character && character.logs.length > 0">
+  <div class="log" *ngFor="let log of character.logs">
+    <span>{{ log.timestamp | date:'medium' }}</span>
+    <p>{{ log.log }}</p>
+  </div>
+</div>
+
+<!-- <div class="button-wrapper" *ngIf="character && character.logs.length > 0">
+  <button class="btn btn-primary" (click)="clearLogs()">Clear logs</button>
+</div> -->

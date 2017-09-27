@@ -24,6 +24,8 @@ class Serializable {
         convertedChar.rangedStats = jsonObj.rangedStats;
         convertedChar.professionStats = jsonObj.professionStats;
 
+        convertedChar.logs = jsonObj.logs;
+
         return convertedChar;
     }
 }
@@ -42,6 +44,8 @@ export class Character extends Serializable {
     public rangedStats: CharacterSecondaryStat[];
     public professionStats: CharacterSecondaryStat[];
     public secondaryStats: CharacterSecondaryStat[];
+
+    public logs: CharacterLog[];
 
     constructor(
         public name: string,
@@ -66,6 +70,8 @@ export class Character extends Serializable {
         this.generateRangedStats();
         this.generateArmorStats();
         this.generateProfessionStats();
+
+        this.logs = [];
     }
 
     generatePrimaryStats() {
@@ -109,6 +115,14 @@ export class Character extends Serializable {
             this.secondaryStats.push(new CharacterSecondaryStat(stat[0], 3, stat[1]));
         }
     }
+
+    public addLog = function (logText: string) {
+        this.logs.unshift(new CharacterLog(logText));
+    };
+
+    public clearLogs = function () {
+        this.logs = [];
+    };
 
     public getQuests = function () {
         const quests: Quest[] = [];
@@ -204,6 +218,16 @@ export class CharacterSecondaryStat {
         public level: number,
         public substats: string
     ) { }
+}
+
+export class CharacterLog {
+    timestamp: Date;
+
+    constructor(
+        private log: string,
+    ) {
+        this.timestamp = new Date();
+    }
 }
 
 export const primaryStatNames = [

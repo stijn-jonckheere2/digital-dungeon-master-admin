@@ -18,6 +18,7 @@ import { EquipmentStatsComponent } from "../equipment-stats/equipment-stats.comp
 import { ProfessionStatsComponent } from "../profession-stats/profession-stats.component";
 import { ErrorService } from "../error-service.service";
 import { AbilitiesComponent } from "../abilities/abilities.component";
+import { CharacterLogsComponent } from "./character-logs/character-logs.component";
 
 const charRoutes: Routes = [
     { path: "characters", component: CharacterListComponent, canActivate: [AuthGuard] },
@@ -30,7 +31,8 @@ const charRoutes: Routes = [
             { path: "professions", component: ProfessionStatsComponent, canActivate: [AuthGuard] },
             { path: "inventory", component: InventoryComponent, canActivate: [AuthGuard] },
             { path: "npcs", component: NpcComponent, canActivate: [AuthGuard] },
-            { path: "quests", component: QuestlogComponent, canActivate: [AuthGuard] }
+            { path: "quests", component: QuestlogComponent, canActivate: [AuthGuard] },
+            { path: "logs", component: CharacterLogsComponent, canActivate: [AuthGuard] }
         ]
     },
     { path: "characters/:id/edit", component: CharacterEditComponent, canActivate: [AuthGuard] },
@@ -41,7 +43,8 @@ const charRoutes: Routes = [
         CharacterListComponent,
         CharacterEditComponent,
         CharacterNewComponent,
-        CharacterMenuComponent
+        CharacterMenuComponent,
+        CharacterLogsComponent
     ],
     imports: [
         CommonModule,

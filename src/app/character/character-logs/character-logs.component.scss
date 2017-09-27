@@ -1,0 +1,27 @@
+@import '~sass/variables';
+
+p {
+    text-align: center;
+}
+
+.log {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.3);    
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);
+    border: 2px solid black;    
+
+    p {
+        text-align: left;
+    }
+    span {
+        display: block;
+        padding-bottom: 10px;
+        color: $primary-color;
+        font-size: 0.8em;
+    }
+}
+
+@media (min-width: 768px) {
+
+}
