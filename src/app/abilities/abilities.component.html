@@ -7,9 +7,7 @@
           {{ ability.name }}
           <span>({{ ability.usesPerTurn }}/R)</span>
         </p>
-        <p class="inventory-item-description">
-          {{ ability.description }}
-        </p>
+        <p class="inventory-item-description">{{ ability.description }}</p>
         <div class="inventory-buttons">
           <button class="btn btn-primary" (click)="editAbility(abilityIndex, ability)">Edit</button>
           <button class="btn btn-danger" (click)="removeAbility(abilityIndex)">Remove</button>
@@ -24,9 +22,7 @@
         <p class="inventory-item-name">
           {{ ability.name }}
         </p>
-        <p class="inventory-item-description">
-          {{ ability.description }}
-        </p>
+        <p class="inventory-item-description">{{ ability.description }}</p>
         <div class="inventory-buttons">
           <button class="btn btn-primary" (click)="editAbility(abilityIndex, ability)">Edit</button>
           <button class="btn btn-danger" (click)="removeAbility(abilityIndex)">Remove</button>

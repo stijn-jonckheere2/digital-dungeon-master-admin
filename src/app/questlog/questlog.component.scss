@@ -1,6 +1,5 @@
 @import '~sass/variables';
 
-
 .inventory {
     margin-top: 10px;
 }
@@ -28,6 +27,10 @@
 }
 .inventory-item-name {
     font-weight: bold;
+}
+.inventory-item-description {
+    white-space: pre-wrap;
+    line-height: 1.2em;
 }
 .inventory-buttons {
     text-align: center;

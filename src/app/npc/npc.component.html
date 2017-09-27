@@ -5,8 +5,7 @@
         <p class="inventory-item-name">
           {{ npc.name }}
         </p>
-        <p class="inventory-item-description">
-          {{ npc.description }}
+        <p class="inventory-item-description" [innerHtml]="npc.description">
         </p>
         <div class="inventory-buttons">
           <button class="btn btn-primary" (click)="editNpc(npcIndex, npc)">Edit</button>

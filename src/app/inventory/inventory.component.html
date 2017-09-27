@@ -21,9 +21,7 @@
         {{ item.name }}
         <span *ngIf="item.amount > 1">({{ item.amount }})</span>
       </p>
-      <p class="inventory-item-description">
-        {{ item.description }}
-      </p>
+      <p class="inventory-item-description">{{ item.description }}</p>
       <div class="inventory-buttons">
         <button class="btn btn-primary" *ngIf="item.consumable" (click)="useItem(itemIndex)">Use</button>
         <button class="btn btn-danger" (click)="removeItem(itemIndex)">Remove</button>

@@ -29,6 +29,10 @@
         color: $primary-color;
     }
 }
+.inventory-item-description {
+    white-space: pre-wrap;
+    line-height: 1.2em;
+}
 .inventory-item-name:first-letter{
     text-transform: uppercase;
 }

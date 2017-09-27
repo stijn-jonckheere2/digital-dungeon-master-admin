@@ -199,7 +199,7 @@ export class CharacterService {
     // Npc Methods
     addNpc(charId: number, npc: Npc) {
         if (this.characters[charId].npcList) {
-            this.characters[charId].npcList.push(npc);
+            this.characters[charId].npcList.unshift(npc);
         } else {
             this.characters[charId].npcList = [npc];
         }
