@@ -30,20 +30,9 @@ export class CharacterListComponent implements OnInit {
     );
   }
 
-  onSave() {
-    this.characterService.saveCharacters(this.characters).subscribe(
-      () => { },
-      (error) => { this.errorService.displayError(error.json().error); },
-    );
-  }
-
   onSelectCharacter(charId: number) {
     this.characterService.setCharacterSelected(charId);
     this.router.navigate(["/characters", charId, "stats"]);
-  }
-
-  onDeleteCharacter(id: number) {
-    this.characterService.deleteCharacter(id);
   }
 
 }

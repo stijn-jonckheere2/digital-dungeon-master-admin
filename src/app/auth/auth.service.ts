@@ -18,16 +18,6 @@ export class AuthService {
   constructor(private router: Router,
     private errorService: ErrorService) { }
 
-  signupUser(email: string, password: string) {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(
-      () => this.signinUser(email, password)
-      )
-      .catch(
-      error => this.errorService.displayError(error.message)
-      );
-  }
-
   signinUser(email: string, password: string) {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(

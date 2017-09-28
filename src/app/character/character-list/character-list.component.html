@@ -20,14 +20,7 @@
             </div>
             <div class="character-links">
                 <a class="btn btn-primary" (click)="onSelectCharacter(i)">Select</a>
-                <a class="btn btn-default" [routerLink]="['/characters', i, 'edit']">Edit</a>
-                <a class="btn btn-danger" (click)="onDeleteCharacter(i)">Delete</a>
             </div>
         </div>
     </div>
 </ng-container>
-
-<div class="button-wrapper">
-    <a [routerLink]="['/characters', 'new']" class="btn btn-primary">New Character</a>
-    <button *ngIf="charactersFetched && characters.length > 0" (click)="onSave()" class="btn btn-default">Save All</button>
-</div>

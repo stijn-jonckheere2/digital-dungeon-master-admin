@@ -8,7 +8,6 @@ import { CharacterService } from "./character.service";
 import { HttpModule } from "@angular/http";
 import { AuthGuard } from "../auth/auth-guard.service";
 import { CharacterEditComponent } from "./character-edit/character-edit.component";
-import { CharacterNewComponent } from "./character-new/character-new.component";
 import { CharacterMenuComponent } from "./character-menu/character-menu.component";
 import { InventoryComponent } from "../inventory/inventory.component";
 import { NpcComponent } from "../npc/npc.component";
@@ -22,7 +21,6 @@ import { CharacterLogsComponent } from "./character-logs/character-logs.componen
 
 const charRoutes: Routes = [
     { path: "characters", component: CharacterListComponent, canActivate: [AuthGuard] },
-    { path: "characters/new", component: CharacterNewComponent, canActivate: [AuthGuard] },
     {
         path: "characters/:id", component: CharacterMenuComponent, canActivate: [AuthGuard], children: [
             { path: "stats", component: StatsComponent, canActivate: [AuthGuard] },
@@ -42,7 +40,6 @@ const charRoutes: Routes = [
     declarations: [
         CharacterListComponent,
         CharacterEditComponent,
-        CharacterNewComponent,
         CharacterMenuComponent,
         CharacterLogsComponent
     ],

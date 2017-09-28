@@ -27,12 +27,14 @@ export class CharacterService {
     }
 
     // Character Methods
-    saveCharacters(characters: Character[]) {
-        const userId = this.authService.getUserId();
+    saveCharacters() {
+        const charactersPerUser = this.deconvertCharacters();
         const token = this.authService.getToken();
-        const url = "https://digital-dungeon-master.firebaseio.com/" + userId +
-            "-characters.json?auth=" + token;
-        return this.http.put(url, this.characters);
+        const url = "https://digital-dungeon-master.firebaseio.com/characters.json?auth=" + token;
+        this.http.put(url, charactersPerUser).subscribe(
+            (response) => { console.log("Characters saved succesfully!"); },
+            (error) => { console.log("saveCharacters(error)", error); }
+        );
     }
 
     fetchCharacters() {
@@ -40,18 +42,17 @@ export class CharacterService {
             (resolve, reject) => {
                 const userId = this.authService.getUserId();
                 const token = this.authService.getToken();
-                const url = "https://digital-dungeon-master.firebaseio.com/" + userId +
-                    "-characters.json?auth=" + token;
+                const url = "https://digital-dungeon-master.firebaseio.com/characters.json?auth=" + token;
 
                 this.http.get(url).subscribe(
                     (response) => {
                         const characters = response.json();
+                        console.log("Fetch:", characters);
                         if (characters !== null) {
-                            console.log("got chars", characters);
                             this.convertCharacters(characters);
                         }
                         this.charactersFetched = true;
-                        console.log("characters fetched", this.characters);
+                        // console.log("characters fetched", this.characters);
                         resolve();
                     },
                     (error) => {
@@ -65,9 +66,32 @@ export class CharacterService {
     }
 
     convertCharacters(characters) {
-        this.characters = characters.map((char, index) => {
-            return Character.fromJSON(char);
-        });
+        this.characters = [];
+        for (const prop in characters) {
+            if (characters[prop]) {
+                characters[prop].map((char, index) => {
+                    this.characters.push(Character.fromJSON(char, prop));
+                });
+                console.log("Prop", prop);
+            }
+        }
+        console.log("Convert:", this.characters);
+    }
+
+    deconvertCharacters() {
+        const deconvertedCharacters = {};
+
+        for (const char of this.characters) {
+            if (typeof deconvertedCharacters[char["userId"]] === typeof []) {
+                deconvertedCharacters[char.userId].push(char);
+            } else {
+                deconvertedCharacters[char.userId] = [];
+                deconvertedCharacters[char.userId].push(char);
+            }
+        }
+
+        console.log("Deconvert:", deconvertedCharacters);
+        return deconvertedCharacters;
     }
 
     getCharacters() {
@@ -126,32 +150,7 @@ export class CharacterService {
 
     updateCharacterById(id: number, character: Character) {
         this.characters[id] = character;
-        this.saveCharacters(this.characters).subscribe(
-            () => { },
-            (error) => {
-                this.errorService.displayError(error.json().error);
-            }
-        );
-    }
-
-    addCharacter(character: Character) {
-        this.characters.push(character);
-        this.saveCharacters(this.characters).subscribe(
-            () => { },
-            (error) => {
-                this.errorService.displayError(error.json().error);
-            }
-        );
-    }
-
-    deleteCharacter(id: number) {
-        this.characters.splice(id, 1);
-        this.saveCharacters(this.characters).subscribe(
-            () => { },
-            (error) => {
-                this.errorService.displayError(error.message);
-            }
-        );
+        this.saveCharacters();
     }
 
     // Inventory Methods
@@ -161,7 +160,7 @@ export class CharacterService {
         } else {
             this.characters[charId].inventory = [item];
         }
-        this.characters[charId].addLog("Added <" + item.name + " x" + item.amount + "> to inventory");
+        this.characters[charId].addLog("[ADMIN] Added <" + item.name + " x" + item.amount + "> to inventory");
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
@@ -172,7 +171,7 @@ export class CharacterService {
     useInventoryItem(charId: number, itemId: number) {
         const character = this.characters[charId];
         const item = character.inventory[itemId];
-        this.characters[charId].addLog("Removed 1 stack of <" + item.name + "> from inventory");
+        this.characters[charId].addLog("[ADMIN] Removed 1 stack of <" + item.name + "> from inventory");
 
         if (item.amount === 1) {
             character.inventory.splice(itemId, 1);
@@ -185,19 +184,19 @@ export class CharacterService {
 
     deleteInventoryItem(charId: number, itemId: number) {
         this.characters[charId].inventory.splice(itemId, 1);
-        this.characters[charId].addLog("Removed <" + this.characters[charId].inventory[itemId].name + "> from inventory");
+        this.characters[charId].addLog("[ADMIN] Removed <" + this.characters[charId].inventory[itemId].name + "> from inventory");
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
     addGold(charId: number, gold: number) {
         this.characters[charId].gold += gold;
-        this.characters[charId].addLog("Added  <" + gold + "> gold to inventory");
+        this.characters[charId].addLog("[ADMIN] Added  <" + gold + "> gold to inventory");
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
     reduceGold(charId: number, gold: number) {
         this.characters[charId].gold -= gold;
-        this.characters[charId].addLog("Removed  <" + gold + "> gold from inventory");
+        this.characters[charId].addLog("[ADMIN] Removed  <" + gold + "> gold from inventory");
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
@@ -208,7 +207,7 @@ export class CharacterService {
         } else {
             this.characters[charId].npcList = [npc];
         }
-        this.characters[charId].addLog("Added NPC  <" + npc.name + ">");
+        this.characters[charId].addLog("[ADMIN] Added NPC  <" + npc.name + ">");
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
@@ -219,13 +218,13 @@ export class CharacterService {
     updateNpc(charId: number, npcId: number, npc: Npc) {
         const character = this.characters[charId];
         character.npcList[npcId] = npc;
-        this.characters[charId].addLog("Updated NPC  <" + npc.name + ">");
+        this.characters[charId].addLog("[ADMIN] Updated NPC  <" + npc.name + ">");
         this.updateCharacterById(charId, character);
     }
 
     deleteNpc(charId: number, npcId: number) {
         this.characters[charId].npcList.splice(npcId, 1);
-        this.characters[charId].addLog("Removed NPC  <" + this.characters[charId].npcList[npcId].name + ">");
+        this.characters[charId].addLog("[ADMIN] Removed NPC  <" + this.characters[charId].npcList[npcId].name + ">");
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
@@ -236,7 +235,7 @@ export class CharacterService {
         } else {
             this.characters[charId].questLog = [quest];
         }
-        this.characters[charId].addLog("Added quest  <" + quest.name + ">");
+        this.characters[charId].addLog("[ADMIN] Added quest  <" + quest.name + ">");
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
@@ -247,13 +246,13 @@ export class CharacterService {
     updateQuest(charId: number, questId: number, quest: Quest) {
         const character = this.characters[charId];
         character.questLog[questId] = quest;
-        this.characters[charId].addLog("Updated quest  <" + quest.name + ">");
+        this.characters[charId].addLog("[ADMIN] Updated quest  <" + quest.name + ">");
         this.updateCharacterById(charId, character);
     }
 
     deleteQuest(charId: number, questId: number) {
         this.characters[charId].questLog.splice(questId, 1);
-        this.characters[charId].addLog("Deleted quest  <" + this.characters[charId].questLog[questId].name + ">");
+        this.characters[charId].addLog("[ADMIN] Deleted quest  <" + this.characters[charId].questLog[questId].name + ">");
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
@@ -264,14 +263,14 @@ export class CharacterService {
         } else {
             this.characters[charId].abilities = [ability];
         }
-        this.characters[charId].addLog("Added ability  <" + ability.name + ">");
+        this.characters[charId].addLog("[ADMIN] Added ability  <" + ability.name + ">");
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
     updateAbility(charId: number, abilityId: number, ability: Ability) {
         const character = this.characters[charId];
         character.abilities[abilityId] = ability;
-        this.characters[charId].addLog("Updated ability  <" + ability.name + ">");
+        this.characters[charId].addLog("[ADMIN] Updated ability  <" + ability.name + ">");
         this.updateCharacterById(charId, character);
     }
 
@@ -281,7 +280,7 @@ export class CharacterService {
 
     deleteAbility(charId: number, abilityId: number) {
         this.characters[charId].abilities.splice(abilityId, 1);
-        this.characters[charId].addLog("Added ability  <" + this.characters[charId].abilities[abilityId].name + ">");
+        this.characters[charId].addLog("[ADMIN] Added ability  <" + this.characters[charId].abilities[abilityId].name + ">");
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
