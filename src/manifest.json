@@ -1,0 +1,14 @@
+{
+    "name": "Digital Dungeon Master Admin",  
+    "short_name": "DDM Admin",
+    "icons": [
+      {
+        "src": "/assets/images/app-icon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait"
+  }
