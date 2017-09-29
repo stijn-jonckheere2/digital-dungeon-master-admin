@@ -33,7 +33,9 @@ export class CharacterService {
         const url = "https://digital-dungeon-master.firebaseio.com/characters.json?auth=" + token;
         this.http.put(url, charactersPerUser).subscribe(
             (response) => { console.log("Characters saved succesfully!"); },
-            (error) => { console.log("saveCharacters(error)", error); }
+            (error) => {
+                this.errorService.displayError("Save characters failed! => " + error);
+            }
         );
     }
 
@@ -47,12 +49,10 @@ export class CharacterService {
                 this.http.get(url).subscribe(
                     (response) => {
                         const characters = response.json();
-                        console.log("Fetch:", characters);
                         if (characters !== null) {
                             this.convertCharacters(characters);
                         }
                         this.charactersFetched = true;
-                        // console.log("characters fetched", this.characters);
                         resolve();
                     },
                     (error) => {
@@ -72,10 +72,8 @@ export class CharacterService {
                 characters[prop].map((char, index) => {
                     this.characters.push(Character.fromJSON(char, prop));
                 });
-                console.log("Prop", prop);
             }
         }
-        console.log("Convert:", this.characters);
     }
 
     deconvertCharacters() {
@@ -90,7 +88,6 @@ export class CharacterService {
             }
         }
 
-        console.log("Deconvert:", deconvertedCharacters);
         return deconvertedCharacters;
     }
 

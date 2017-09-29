@@ -48,7 +48,6 @@ export class AuthService {
         this.router.navigate(["/login"]);
         this.errorService.displayError("Your session has expired. Please login again.");
       } else {
-        console.log("User found! Refreshing session lifetime!");
         localStorage.setItem("digital-dungeon-master-auth-user", user.uid);
         firebase.auth().currentUser.getIdToken(true).then(
           (token) => {
@@ -64,7 +63,6 @@ export class AuthService {
       () => {
         this.token = null;
         this.authChangedEvent.emit(false);
-
         localStorage.removeItem("digital-dungeon-master-auth-user");
         localStorage.removeItem("digital-dungeon-master-auth-token");
         this.router.navigate(["/login"]);
