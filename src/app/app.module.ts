@@ -22,6 +22,8 @@ import { EquipmentStatsComponent } from "./equipment-stats/equipment-stats.compo
 import { ProfessionStatsComponent } from "./profession-stats/profession-stats.component";
 import { ErrorDisplayComponent } from "./error-display/error-display.component";
 import { AbilitiesComponent } from "./abilities/abilities.component";
+import { AdminNotesViewerComponent } from "./admin-notes-viewer/admin-notes-viewer.component";
+import { AdminNotesService } from "./admin-notes.service";
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { AbilitiesComponent } from "./abilities/abilities.component";
     ProfessionStatsComponent,
     ErrorDisplayComponent,
     AbilitiesComponent,
+    AdminNotesViewerComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,7 @@ import { AbilitiesComponent } from "./abilities/abilities.component";
     CharacterModule,
     AppRoutingModule,
   ],
-  providers: [AuthService, ErrorService, AuthGuard],
+  providers: [AuthService, ErrorService, AdminNotesService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

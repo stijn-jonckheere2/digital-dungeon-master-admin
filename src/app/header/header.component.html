@@ -9,6 +9,8 @@
     <li class="hide-on-desktop">
       <a>Menu</a>
     </li>
+    <li routerLinkActive="active"><a [routerLink]="['/characters']">Characters</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['/admin-notes']">Admin Notes</a></li>
     <li class="nav-dark"><a (click)="onLogout()">Logout</a></li>
   </ul>
   <ul [ngClass]="{'dropdown-closed': !mobileMenuOpen, 'dropdown-open': mobileMenuOpen }" (click)="toggleMobileMenu()" *ngIf="authenticated && selectedChar > -1">
@@ -22,7 +24,7 @@
     <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'inventory']">Inventory</a></li>
     <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'quests']">Quests</a></li>
     <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'npcs']">NPCs</a></li>
-    <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'logs']">Logs</a></li>    
+    <li routerLinkActive="active"><a [routerLink]="['/characters', selectedChar, 'logs']">Logs</a></li>
     <li class="nav-dark"><a (click)="unselectCharacter()">Chars</a></li>
     <li class="nav-dark"><a (click)="onLogout()">Logout</a></li>
   </ul>

@@ -5,10 +5,11 @@ import { AuthGuard } from "./auth/auth-guard.service";
 
 import { CharacterEditComponent } from "./character/character-edit/character-edit.component";
 import { CharacterListComponent } from "./character/character-list/character-list.component";
+import { AdminNotesViewerComponent } from "./admin-notes-viewer/admin-notes-viewer.component";
 
 const appRoutes: Routes = [
+  { path: "admin-notes", component: AdminNotesViewerComponent, canActivate: [AuthGuard] },
   { path: "", redirectTo: "characters", pathMatch: "full" },
-  // { path: "**", redirectTo: "characters" }
 ];
 
 @NgModule({
