@@ -21,9 +21,6 @@ export class AdminNotesService {
 
         this.http.get(url).subscribe(
           (response) => {
-            console.log("Received notes", response);
-            console.log("Received notes", response.json());
-
             const notes = response.json();
             if (notes !== null) {
               this.adminNotes = notes;
