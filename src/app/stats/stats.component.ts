@@ -45,11 +45,11 @@ export class StatsComponent implements OnInit, OnDestroy {
     switch (type) {
       case "primary":
         this.character.primaryStats[statIndex].level++;
-        this.statLogs.push("Added 1 stat point to <" + this.character.primaryStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Added 1 stat point to <" + this.character.primaryStats[statIndex].name + ">");
         break;
       case "secondary":
         this.character.secondaryStats[statIndex].level++;
-        this.statLogs.push("Added 1 stat point to <" + this.character.secondaryStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Added 1 stat point to <" + this.character.secondaryStats[statIndex].name + ">");
         break;
     }
   }

@@ -44,7 +44,7 @@ export class ProfessionStatsComponent implements OnInit, OnDestroy {
     switch (type) {
       case "profession":
         this.character.professionStats[statIndex].level++;
-        this.statLogs.push("Added 1 stat point to <" + this.character.professionStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Added 1 stat point to <" + this.character.professionStats[statIndex].name + ">");
         break;
     }
   }

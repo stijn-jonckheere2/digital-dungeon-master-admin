@@ -44,15 +44,15 @@ export class EquipmentStatsComponent implements OnInit, OnDestroy {
     switch (type) {
       case "weapon":
         this.character.weaponStats[statIndex].level++;
-        this.statLogs.push("Added 1 stat point to <" + this.character.weaponStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Added 1 stat point to <" + this.character.weaponStats[statIndex].name + ">");
         break;
       case "ranged":
         this.character.rangedStats[statIndex].level++;
-        this.statLogs.push("Added 1 stat point to <" + this.character.rangedStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Added 1 stat point to <" + this.character.rangedStats[statIndex].name + ">");
         break;
       case "armor":
         this.character.armorStats[statIndex].level++;
-        this.statLogs.push("Added 1 stat point to <" + this.character.armorStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Added 1 stat point to <" + this.character.armorStats[statIndex].name + ">");
         break;
     }
   }
@@ -61,15 +61,15 @@ export class EquipmentStatsComponent implements OnInit, OnDestroy {
     switch (type) {
       case "weapon":
         this.character.weaponStats[statIndex].level--;
-        this.statLogs.push("Removed 1 stat point from <" + this.character.weaponStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Removed 1 stat point from <" + this.character.weaponStats[statIndex].name + ">");
         break;
       case "ranged":
         this.character.rangedStats[statIndex].level--;
-        this.statLogs.push("Removed 1 stat point from <" + this.character.rangedStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Removed 1 stat point from <" + this.character.rangedStats[statIndex].name + ">");
         break;
       case "armor":
         this.character.armorStats[statIndex].level--;
-        this.statLogs.push("Removed 1 stat point from <" + this.character.armorStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Removed 1 stat point from <" + this.character.armorStats[statIndex].name + ">");
         break;
     }
   }
