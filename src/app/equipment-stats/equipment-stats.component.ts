@@ -15,7 +15,7 @@ export class EquipmentStatsComponent implements OnInit, OnDestroy {
   allowEdit = false;
   characterSub: any;
   statLogs = [];
-  
+
   constructor(private characterService: CharacterService, private errorService: ErrorService,
     private route: ActivatedRoute) {
   }

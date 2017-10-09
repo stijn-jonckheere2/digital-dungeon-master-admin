@@ -16,7 +16,6 @@ export class StatsComponent implements OnInit, OnDestroy {
   characterSub: any;
 
   statLogs = [];
-
   constructor(private characterService: CharacterService, private errorService: ErrorService,
     private route: ActivatedRoute) {
   }
@@ -25,6 +24,7 @@ export class StatsComponent implements OnInit, OnDestroy {
     this.characterService.getCharacterById(this.characterId).then(
       (char: Character) => this.character = char
     );
+
   }
 
   ngOnInit() {

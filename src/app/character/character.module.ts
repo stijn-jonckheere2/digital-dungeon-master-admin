@@ -50,7 +50,6 @@ const charRoutes: Routes = [
         RouterModule.forChild(charRoutes)
     ],
     providers: [
-        CharacterService,
         ErrorService
     ],
     exports: [

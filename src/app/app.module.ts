@@ -24,6 +24,7 @@ import { ErrorDisplayComponent } from "./error-display/error-display.component";
 import { AbilitiesComponent } from "./abilities/abilities.component";
 import { AdminNotesViewerComponent } from "./admin-notes-viewer/admin-notes-viewer.component";
 import { AdminNotesService } from "./admin-notes.service";
+import { CharacterService } from "./character/character.service";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AdminNotesService } from "./admin-notes.service";
     CharacterModule,
     AppRoutingModule,
   ],
-  providers: [AuthService, ErrorService, AdminNotesService, AuthGuard],
+  providers: [AuthService, ErrorService, AdminNotesService, AuthGuard, CharacterService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
