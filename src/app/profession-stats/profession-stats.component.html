@@ -8,13 +8,14 @@
       <p>{{ stat.name }}</p>
       <div class="button-wrapper">
         <button *ngIf="allowEdit" class="btn btn-danger btn-small" (click)="decrementStat('profession', statIndex)" [disabled]="stat.level === 3">-</button>
-        <span>{{ stat.level }}</span>
+        <span *ngIf="allowEdit" (click)="setStat(statIndex, stat.name)">{{ stat.level }}</span>        
+        <span *ngIf="!allowEdit">{{ stat.level }}</span>
         <button *ngIf="allowEdit" class="btn btn-primary btn-small" (click)="incrementStat('profession', statIndex)" [disabled]="stat.level === 20">+</button>
       </div>
     </div>
   </div>
   <div class="button-wrapper">
     <button class="btn btn-primary" (click)="enableEdit()" [disabled]="allowEdit">Edit</button>
-    <button class="btn btn-primary" (click)="onSave()">Save</button>
+    <button class="btn btn-primary" (click)="onSave()" [disabled]="!allowEdit">Save</button>
   </div>
 </ng-container>

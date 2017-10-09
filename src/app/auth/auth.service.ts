@@ -42,6 +42,13 @@ export class AuthService {
       );
   }
 
+  setAuthPersistence() {
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .catch(function (error) {
+        this.errorService.displayError(error.message);
+      });
+  }
+
   startAuthListening() {
     this.firebaseAuthListener = firebase.auth().onAuthStateChanged((user: any) => {
       if (user === null) {
