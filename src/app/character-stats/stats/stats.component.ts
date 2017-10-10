@@ -72,6 +72,7 @@ export class StatsComponent implements OnInit, OnDestroy {
   }
 
   setStat(type: string, statIndex, statName) {
+    // tslint:disable-next-line:radix
     const newStatValue = parseInt(window.prompt("Enter a value for <" + statName + ">:"));
 
     switch (type) {
