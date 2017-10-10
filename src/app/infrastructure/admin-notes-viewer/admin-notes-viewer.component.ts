@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { AdminNotesService } from "../admin-notes.service";
+import { AdminNotesService } from "../../admin-notes.service";
 import { Router } from "@angular/router";
-import { ErrorService } from "../error-service.service";
+import { ErrorService } from "../../error-service.service";
 
 @Component({
   selector: "app-admin-notes-viewer",
