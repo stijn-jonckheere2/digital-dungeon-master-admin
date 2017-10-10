@@ -18,6 +18,7 @@ import { ProfessionStatsComponent } from "../character-stats/profession-stats/pr
 import { ErrorService } from "../error-service.service";
 import { AbilitiesComponent } from "../character-sub/abilities/abilities.component";
 import { CharacterLogsComponent } from "./character-logs/character-logs.component";
+import { FilterPipe } from './character-logs/filter.pipe';
 
 const charRoutes: Routes = [
     { path: "characters", component: CharacterListComponent, canActivate: [AuthGuard] },
@@ -41,7 +42,8 @@ const charRoutes: Routes = [
         CharacterListComponent,
         CharacterEditComponent,
         CharacterMenuComponent,
-        CharacterLogsComponent
+        CharacterLogsComponent,
+        FilterPipe
     ],
     imports: [
         CommonModule,

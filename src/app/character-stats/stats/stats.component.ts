@@ -58,11 +58,11 @@ export class StatsComponent implements OnInit, OnDestroy {
     switch (type) {
       case "primary":
         this.character.primaryStats[statIndex].level--;
-        this.statLogs.push("Removed 1 stat point from <" + this.character.primaryStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Removed 1 stat point from <" + this.character.primaryStats[statIndex].name + ">");
         break;
       case "secondary":
         this.character.secondaryStats[statIndex].level--;
-        this.statLogs.push("Removed 1 stat point from <" + this.character.secondaryStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Removed 1 stat point from <" + this.character.secondaryStats[statIndex].name + ">");
         break;
     }
   }
@@ -96,7 +96,7 @@ export class StatsComponent implements OnInit, OnDestroy {
 
   onSave() {
     for (const log of this.statLogs) {
-      this.character.addLog(log);
+      this.character.addLog(log, "statLog");
     }
     this.statLogs = [];
     this.characterService.updateCharacterById(this.characterId, this.character);

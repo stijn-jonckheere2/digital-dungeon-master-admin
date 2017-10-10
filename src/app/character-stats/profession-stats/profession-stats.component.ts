@@ -53,7 +53,7 @@ export class ProfessionStatsComponent implements OnInit, OnDestroy {
     switch (type) {
       case "profession":
         this.character.professionStats[statIndex].level--;
-        this.statLogs.push("Removed 1 stat point from <" + this.character.professionStats[statIndex].name + ">");
+        this.statLogs.push("[ADMIN] Removed 1 stat point from <" + this.character.professionStats[statIndex].name + ">");
         break;
     }
   }
@@ -74,7 +74,7 @@ export class ProfessionStatsComponent implements OnInit, OnDestroy {
 
   onSave() {
     for (const log of this.statLogs) {
-      this.character.addLog(log);
+      this.character.addLog(log, "statLog");
     }
     this.statLogs = [];
     this.characterService.updateCharacterById(this.characterId, this.character);
