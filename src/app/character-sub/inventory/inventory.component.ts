@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 
 import { Character, InventoryItem } from "../../character/character.models";
 import { CharacterService } from "../../character/character.service";
+import { ErrorService } from "../../error-service.service";
 
 
 @Component({
@@ -20,7 +21,8 @@ export class InventoryComponent implements OnInit, OnDestroy {
   newItemId = -1;
 
   constructor(private characterService: CharacterService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private errorService: ErrorService) {
   }
 
   ngOnInit() {
@@ -87,13 +89,25 @@ export class InventoryComponent implements OnInit, OnDestroy {
     this.updateInventory();
   }
 
-  addGold(amount: number) {
-    this.characterService.addGold(this.characterId, amount);
-    this.characterService.updateCharacterById(this.characterId, this.character);
+  addGold() {
+    // tslint:disable-next-line:radix
+    const gold = parseInt(prompt("How much gold would you like to add?"));
+    if (!isNaN(gold)) {
+      this.characterService.addGold(this.characterId, gold);
+      this.characterService.updateCharacterById(this.characterId, this.character);
+    } else {
+      this.errorService.displayError("Not a valid amount of gold!");
+    }
   }
 
-  reduceGold(amount: number) {
-    this.characterService.reduceGold(this.characterId, amount);
-    this.characterService.updateCharacterById(this.characterId, this.character);
+  reduceGold() {
+    // tslint:disable-next-line:radix
+    const gold = parseInt(prompt("How much gold would you like to spend?"));
+    if(!isNaN(gold) && this.character.gold >= gold) {
+      this.characterService.reduceGold(this.characterId, gold);
+      this.characterService.updateCharacterById(this.characterId, this.character);
+    } else {
+      this.errorService.displayError("You don't have enough gold!");
+    }
   }
 }
