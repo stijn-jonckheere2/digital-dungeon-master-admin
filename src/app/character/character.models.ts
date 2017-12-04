@@ -1,3 +1,5 @@
+import { v1 as uuidv1 } from "uuid";
+
 class Serializable {
     static fromJSON(jsonObj: Character, userObjId: string) {
         const convertedChar = new Character(
@@ -237,6 +239,22 @@ export class CharacterLog {
         public type: string
     ) {
         this.timestamp = new Date();
+    }
+}
+
+export class StoryRecap {
+    public id: string;
+    public createdOn: Date;
+    public modifiedOn: Date;
+
+    constructor(
+        public recap: string,
+        public createdBy: string,
+        public modifiedBy: string,
+    ) {
+        this.id = uuidv1();
+        this.createdOn = new Date();
+        this.modifiedOn = new Date();
     }
 }
 

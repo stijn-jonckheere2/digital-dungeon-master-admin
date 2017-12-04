@@ -11,6 +11,9 @@
     </li>
     <li routerLinkActive="active"><a [routerLink]="['/characters']">Characters</a></li>
     <li routerLinkActive="active"><a [routerLink]="['/admin-notes']">Admin Notes</a></li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['/story-recap']">Story Recap</a>
+    </li>
     <li class="nav-dark"><a (click)="onLogout()">Logout</a></li>
   </ul>
   <ul [ngClass]="{'dropdown-closed': !mobileMenuOpen, 'dropdown-open': mobileMenuOpen }" (click)="toggleMobileMenu()" *ngIf="authenticated && selectedChar > -1">

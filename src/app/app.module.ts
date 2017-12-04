@@ -11,6 +11,9 @@ import { ErrorService } from "./error-service.service";
 
 import { AuthGuard } from "./auth/auth-guard.service";
 import { AuthModule } from "./auth/auth.module";
+import { AdminNotesService } from "./admin-notes.service";
+import { CharacterService } from "./character/character.service";
+import { StoryRecapService } from "./story-recap.service";
 
 import { HeaderComponent } from "./infrastructure/header/header.component";
 import { CharacterModule } from "./character/character.module";
@@ -23,8 +26,7 @@ import { ProfessionStatsComponent } from "./character-stats/profession-stats/pro
 import { ErrorDisplayComponent } from "./infrastructure/error-display/error-display.component";
 import { AbilitiesComponent } from "./character-sub/abilities/abilities.component";
 import { AdminNotesViewerComponent } from "./infrastructure/admin-notes-viewer/admin-notes-viewer.component";
-import { AdminNotesService } from "./admin-notes.service";
-import { CharacterService } from "./character/character.service";
+import { StoryRecapComponent } from "./infrastructure/story-recap/story-recap.component";
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { CharacterService } from "./character/character.service";
     ErrorDisplayComponent,
     AbilitiesComponent,
     AdminNotesViewerComponent,
+    StoryRecapComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,7 @@ import { CharacterService } from "./character/character.service";
     CharacterModule,
     AppRoutingModule,
   ],
-  providers: [AuthService, ErrorService, AdminNotesService, AuthGuard, CharacterService,
+  providers: [AuthService, ErrorService, AdminNotesService, StoryRecapService, AuthGuard, CharacterService,
   ],
   bootstrap: [AppComponent]
 })
