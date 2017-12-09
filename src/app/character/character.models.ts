@@ -29,9 +29,10 @@ class Serializable {
 
         convertedChar.logs = jsonObj.logs || [];
 
-        for (let i = 0; i < convertedChar.logs.length; i++) {
-            if (!convertedChar.logs[i].type) {
-                convertedChar.logs[i]["type"] = "all";
+        // add inventory item types
+        for (let i = 0; i < convertedChar.inventory.length; i++) {
+            if (!convertedChar.inventory[i]["type"]) {
+                convertedChar.inventory[i]["type"] = "unknown";
             }
         }
 
@@ -188,7 +189,8 @@ export class InventoryItem {
         public name: string,
         public description: string,
         public amount: number,
-        public consumable: boolean
+        public consumable: boolean,
+        public type: string
     ) { }
 }
 

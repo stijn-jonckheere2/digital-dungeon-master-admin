@@ -17,8 +17,9 @@ export class InventoryComponent implements OnInit, OnDestroy {
   characterSub: any;
 
   itemFormEnabled = false;
-  newInventoryItem = new InventoryItem("", "", 1, false);
+  newInventoryItem = new InventoryItem("", "", 1, false, "unknown");
   newItemId = -1;
+  activeItemIndex = -1;
 
   constructor(private characterService: CharacterService,
     private route: ActivatedRoute,
@@ -62,20 +63,22 @@ export class InventoryComponent implements OnInit, OnDestroy {
       this.characterService.addInventoryItem(this.characterId, this.newInventoryItem);
     }
 
-    this.newInventoryItem = new InventoryItem("", "", 1, false);
+    this.newInventoryItem = new InventoryItem("", "", 1, false, "unknown");
     this.newItemId = -1;
     this.itemFormEnabled = false;
     this.updateInventory();
   }
 
   editItem(itemId: number) {
-    this.newInventoryItem = this.character.inventory[itemId];
+    this.newInventoryItem = {
+      ... this.character.inventory[itemId]
+    };
     this.newItemId = itemId;
     this.itemFormEnabled = true;
   }
 
   cancelAddItem() {
-    this.newInventoryItem = new InventoryItem("", "", 1, false);
+    this.newInventoryItem = new InventoryItem("", "", 1, false, "unknown");
     this.itemFormEnabled = false;
   }
 
@@ -108,6 +111,14 @@ export class InventoryComponent implements OnInit, OnDestroy {
       this.characterService.updateCharacterById(this.characterId, this.character);
     } else {
       this.errorService.displayError("You don't have enough gold!");
+    }
+  }
+
+  toggleActiveItem(itemIndex: number) {
+    if (this.activeItemIndex === itemIndex) {
+      this.activeItemIndex = -1;
+    } else {
+      this.activeItemIndex = itemIndex;
     }
   }
 }
