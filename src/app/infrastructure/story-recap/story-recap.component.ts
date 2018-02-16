@@ -70,4 +70,9 @@ export class StoryRecapComponent implements OnInit, OnDestroy {
     return diff / (1000 * 60 * 60 * 24);
   }
 
+  createRecap() {
+    const recap = new StoryRecap("", "admin", "admin");
+    this.recapService.addRecap(recap);
+  }
+
 }

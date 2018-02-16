@@ -68,6 +68,16 @@ export class StoryRecapService {
     return promise;
   }
 
+  addRecap(recap: StoryRecap) {
+    const url = environment.database.databaseURL + "/recaps.json";
+    this.http.post(url, recap).subscribe(
+      (response) => { console.log("Recap created succesfully!" + new Date()); },
+      (error) => {
+        this.errorService.displayError("Create recap failed! => " + error);
+      }
+    );
+  }
+
   updateRecap(recap: StoryRecap) {
     recap.modifiedBy = this.authService.getUserId();
     recap.modifiedOn = new Date();

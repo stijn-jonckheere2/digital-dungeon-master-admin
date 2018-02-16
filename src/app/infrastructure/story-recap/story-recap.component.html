@@ -7,14 +7,17 @@
     <div class="recap-wrapper" *ngIf="recapsFetched && recaps.length > 0">
         <ng-container *ngFor="let recap of recaps; let recapIndex = index">
             <div class="recap">
-                <span>Updated: {{ recap.modifiedOn | date:'EEEE d/M/y' }} <span>{{ recap.modifiedOn | date:'shortTime' }}</span></span>
+                <span>Updated: {{ recap.modifiedOn | date:'EEEE d/M/y' }}
+                    <span>{{ recap.modifiedOn | date:'shortTime' }}</span>
+                </span>
                 <p>{{ recap.recap }}</p>
             </div>
             <ng-container *ngIf="recapIndex == 0">
                 <div class="button-wrapper">
-                    <button (click)="editRecap(recap)" class="btn btn-primary">Edit</button>
+                    <button (click)="createRecap()" class="btn btn-primary">Create</button>
+                    <button (click)="editRecap(recap)" class="btn btn-default">Edit</button>
                 </div>
-                <h2 *ngIf="recaps.length >= 2">Previous Recaps</h2>                            
+                <h2 *ngIf="recaps.length >= 2">Previous Recaps</h2>
             </ng-container>
             <hr *ngIf="recapIndex >= 1 && recapIndex < recaps.length - 1">
         </ng-container>
