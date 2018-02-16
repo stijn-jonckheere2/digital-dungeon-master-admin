@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import * as firebase from "firebase";
+import { environment } from "../environments/environment";
 import { AuthService } from "./auth/auth.service";
 
 @Component({
@@ -11,19 +12,17 @@ export class AppComponent implements OnInit {
   title = "app";
 
   constructor(private authService: AuthService) {
-
+    authService.handleAuthentication();
   }
 
   ngOnInit() {
     firebase.initializeApp({
-      apiKey: "AIzaSyA8J2ryEam-6m4WAoM3k1CT75ylhQPUWLQ",
-      authDomain: "digital-dungeon-master.firebaseapp.com",
-      databaseURL: "https://digital-dungeon-master.firebaseio.com",
-      projectId: "digital-dungeon-master",
-      storageBucket: "digital-dungeon-master.appspot.com",
-      messagingSenderId: "165971576370"
+      apiKey: environment.database.apiKey,
+      authDomain: environment.database.authDomain,
+      databaseURL: environment.database.databaseURL,
+      projectId: environment.database.projectId,
+      storageBucket: environment.database.storageBucket,
+      messagingSenderId: environment.database.messagingSenderId
     });
-    this.authService.setAuthPersistence();
-    this.authService.startAuthListening();
   }
 }

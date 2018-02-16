@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AuthService } from "./auth/auth.service";
 import { Http } from "@angular/http";
 import { ErrorService } from "./error-service.service";
+import { environment } from "../environments/environment";
 
 @Injectable()
 export class AdminNotesService {
@@ -15,9 +16,7 @@ export class AdminNotesService {
   fetchAdminNotes() {
     const fetchPromise = new Promise(
       (resolve, reject) => {
-        const userId = this.authService.getUserId();
-        const token = this.authService.getToken();
-        const url = "https://digital-dungeon-master.firebaseio.com/adminnotes.json?auth=" + token;
+        const url = environment.database.databaseURL + "/adminnotes.json";
 
         this.http.get(url).subscribe(
           (response) => {
@@ -57,8 +56,7 @@ export class AdminNotesService {
   }
 
   saveNotes(notes: string) {
-    const token = this.authService.getToken();
-    const url = "https://digital-dungeon-master.firebaseio.com/adminnotes.json?auth=" + token;
+    const url = environment.database.databaseURL + "/adminnotes.json";
     this.adminNotes = notes;
 
     this.http.put(url, [notes]).subscribe(

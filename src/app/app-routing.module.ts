@@ -10,7 +10,7 @@ import { StoryRecapComponent } from "./infrastructure/story-recap/story-recap.co
 
 const appRoutes: Routes = [
   { path: "admin-notes", component: AdminNotesViewerComponent, canActivate: [AuthGuard] },
-  { path: "story-recap", component: StoryRecapComponent, canActivate: [AuthGuard] },  
+  { path: "story-recap", component: StoryRecapComponent, canActivate: [AuthGuard] },
   { path: "", redirectTo: "characters", pathMatch: "full" },
 ];
 

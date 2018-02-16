@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from "@angular/core";
 import * as firebase from "firebase";
+import { environment } from "../../environments/environment";
 
 import { AuthService } from "../auth/auth.service";
 import { Http } from "@angular/http";
@@ -32,8 +33,7 @@ export class CharacterService {
     // Character Methods
     saveCharacters() {
         const charactersPerUser = this.deconvertCharacters();
-        const token = this.authService.getToken();
-        const url = "https://digital-dungeon-master.firebaseio.com/characters.json?auth=" + token;
+        const url = environment.database.databaseURL + "/characters.json";
         this.http.put(url, charactersPerUser).subscribe(
             (response) => { console.log("Characters saved succesfully!" + new Date()); },
             (error) => {
