@@ -2,6 +2,7 @@ import { v1 as uuidv1 } from "uuid";
 
 class Serializable {
     static fromJSON(jsonObj: Character, userObjId: string) {
+
         const convertedChar = new Character(
             jsonObj.name,
             jsonObj.race,
@@ -18,6 +19,7 @@ class Serializable {
         convertedChar.inventory = jsonObj.inventory || [];
         convertedChar.questLog = jsonObj.questLog || [];
         convertedChar.npcList = jsonObj.npcList || [];
+        convertedChar.combatSheets = jsonObj.combatSheets ? this.combatSheetsFromJSON(jsonObj.combatSheets) : [];
 
         convertedChar.primaryStats = jsonObj.primaryStats;
         convertedChar.secondaryStats = jsonObj.secondaryStats;
@@ -36,7 +38,39 @@ class Serializable {
             }
         }
 
+        // add ability amountOfStrikes
+        for (let i = 0; i < convertedChar.abilities.length; i++) {
+            if (!convertedChar.abilities[i]["amountOfStrikes"]) {
+                convertedChar.abilities[i]["amountOfStrikes"] = 1;
+            }
+            if (!convertedChar.abilities[i]["hasStatusEffect"]) {
+                convertedChar.abilities[i]["hasStatusEffect"] = false;
+                convertedChar.abilities[i]["effect"] = {
+                    name: "",
+                    numberOfTurns: 1
+                };
+            }
+        }
+
         return convertedChar;
+    }
+    static combatSheetsFromJSON(jsonObj: CombatSheet[]) {
+        const sheets: CombatSheet[] = [];
+
+        jsonObj.map((sheet) => {
+            if (!sheet.actions) {
+                sheet.actions = [];
+            }
+            if (!sheet.wounds) {
+                sheet.wounds = [];
+            }
+            if (!sheet.statusEffects) {
+                sheet.statusEffects = [];
+            }
+            sheets.push(sheet);
+        });
+
+        return sheets;
     }
 }
 
@@ -48,6 +82,7 @@ export class Character extends Serializable {
     public inventory: InventoryItem[];
     public questLog: Quest[];
     public npcList: Npc[];
+    public combatSheets: CombatSheet[];
 
     public primaryStats: CharacterStat[];
     public armorStats: CharacterStat[];
@@ -72,9 +107,9 @@ export class Character extends Serializable {
         this.inventory = [];
         this.questLog = [];
         this.npcList = [];
+        this.combatSheets = [];
 
         this.gold = 0;
-        this.userId = "";
 
         this.generatePrimaryStats();
         this.generateSecondaryStats();
@@ -84,6 +119,7 @@ export class Character extends Serializable {
         this.generateProfessionStats();
 
         this.logs = [];
+        this.userId = "";
     }
 
     generatePrimaryStats() {
@@ -176,25 +212,39 @@ export class Character extends Serializable {
 }
 
 export class Ability {
+    public id: string;
+
     constructor(
         public name: string,
         public description: string,
         public usesPerTurn: number,
-        public isFlavourAbility: boolean
-    ) { }
+        public amountOfStrikes: number,
+        public isFlavourAbility: boolean,
+        public hasStatusEffect: boolean,
+        public effect: {
+            name: string;
+            numberOfTurns: number;
+        }
+    ) {
+        this.id = uuidv1();
+    }
 }
 
 export class InventoryItem {
+    public id: string;
     constructor(
         public name: string,
         public description: string,
         public amount: number,
         public consumable: boolean,
         public type: string
-    ) { }
+    ) {
+        this.id = uuidv1();
+    }
 }
 
 export class Quest {
+    public id: string;
     public dateAdded: Date;
     public dateCompleted: Date;
 
@@ -203,6 +253,7 @@ export class Quest {
         public description: string,
         public complete: boolean,
     ) {
+        this.id = uuidv1();
         this.dateAdded = new Date();
     }
 
@@ -212,34 +263,45 @@ export class Quest {
 }
 
 export class Npc {
+    public id: string;
     constructor(
         public name: string,
         public description: string
-    ) { }
+    ) {
+        this.id = uuidv1();
+    }
 }
 
 export class CharacterStat {
+    public id: string;
     constructor(
         public name: string,
         public level: number
-    ) { }
+    ) {
+        this.id = uuidv1();
+    }
 }
 
 export class CharacterSecondaryStat {
+    public id: string;
     constructor(
         public name: string,
         public level: number,
         public substats: string
-    ) { }
+    ) {
+        this.id = uuidv1();
+    }
 }
 
 export class CharacterLog {
+    public id: string;
     timestamp: Date;
 
     constructor(
         public log: string,
         public type: string
     ) {
+        this.id = uuidv1();
         this.timestamp = new Date();
     }
 }
@@ -258,6 +320,46 @@ export class StoryRecap {
         this.createdOn = new Date();
         this.modifiedOn = new Date();
     }
+}
+
+export class CombatSheet extends Serializable {
+    public id: string;
+    public createdOn: Date;
+    public modifiedOn: Date;
+    public actions: any[];
+    public wounds: CombatWound[];
+    public statusEffects: {
+        name: string;
+        numberOfTurns: number;
+    }[];
+
+    /*public usedAbilities: {
+        toHitRoll: boolean;
+        damageRoll: number;
+        ability: Ability
+    }[];
+    public usedItems: InventoryItem[];*/
+
+    constructor(
+        public name: string,
+        public autoRoll: boolean,
+        public initiative?: number,
+    ) {
+        super();
+        this.id = uuidv1();
+        this.createdOn = new Date();
+        this.modifiedOn = new Date();
+        this.actions = [];
+        this.wounds = [];
+        this.statusEffects = [];
+    }
+}
+
+export class CombatWound {
+    constructor(
+        public location: string,
+        public severity: string
+    ) { }
 }
 
 export const primaryStatNames = [

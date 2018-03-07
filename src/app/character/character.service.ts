@@ -4,7 +4,7 @@ import { environment } from "../../environments/environment";
 
 import { AuthService } from "../auth/auth.service";
 import { Http } from "@angular/http";
-import { Character, InventoryItem, Npc, Quest, Ability } from "./character.models";
+import { Character, InventoryItem, Npc, Quest, Ability, CombatSheet } from "./character.models";
 import { ErrorService } from "../error-service.service";
 
 @Injectable()
@@ -279,6 +279,35 @@ export class CharacterService {
 
     getAbilities(charId: number) {
         return this.characters[charId].abilities;
+    }
+
+    // Combat Sheet Methods
+    addCombatSheet(charId: number, sheet: CombatSheet) {
+        if (this.characters[charId].combatSheets) {
+            this.characters[charId].combatSheets.push(sheet);
+        } else {
+            this.characters[charId].combatSheets = [sheet];
+        }
+        this.characters[charId].addLog("Added combat sheet  <" + sheet.name + ">", "combatSheetLog");
+        this.updateCharacterById(charId, this.characters[charId]);
+    }
+
+    updateCombatSheet(charId: number, sheetIndex: number, sheet: CombatSheet) {
+        const character = this.characters[charId];
+        character.combatSheets[sheetIndex] = sheet;
+        this.characters[charId].addLog("Updated combat sheet  <" + sheet.name + ">", "combatSheetLog");
+        this.updateCharacterById(charId, character);
+    }
+
+    getCombatSheets(charId: number) {
+        return this.characters[charId].combatSheets;
+    }
+
+    deleteCombatSheet(charId: number, sheetIndex: number) {
+        this.characters[charId]
+            .addLog("Removed combat sheet  <" + this.characters[charId].combatSheets[sheetIndex].name + ">", "combatSheetLog");
+        this.characters[charId].combatSheets.splice(sheetIndex, 1);
+        this.updateCharacterById(charId, this.characters[charId]);
     }
 
     deleteAbility(charId: number, abilityId: number) {

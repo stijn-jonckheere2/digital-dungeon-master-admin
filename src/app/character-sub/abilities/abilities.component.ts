@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Character, Ability } from "../../character/character.models";
 import { CharacterService } from "../../character/character.service";
 import { ActivatedRoute } from "@angular/router";
+import { ErrorService } from "../../error-service.service";
 
 @Component({
   selector: "app-abilities",
@@ -14,10 +15,11 @@ export class AbilitiesComponent implements OnInit, OnDestroy {
   characterId: number;
 
   abilityFormEnabled = false;
-  newAbility = new Ability("", "", 1, false);
+  newAbility = new Ability("", "", 1, 1, false, false, {name: "", numberOfTurns: 1});
   newAbilityId = -1;
 
   constructor(private characterService: CharacterService,
+    private errorService: ErrorService,
     private route: ActivatedRoute) {
   }
 
@@ -62,16 +64,20 @@ export class AbilitiesComponent implements OnInit, OnDestroy {
     if (this.newAbilityId >= 0) {
       this.characterService.updateAbility(this.characterId, this.newAbilityId, this.newAbility);
     } else {
-      this.characterService.addAbility(this.characterId, this.newAbility);
+      if (this.newAbility.name.length === 0) {
+        this.errorService.displayError("Ability name can't be empty!");
+      } else {
+        this.characterService.addAbility(this.characterId, this.newAbility);
+      }
     }
-    this.newAbility = new Ability("", "", 1, false);
+    this.newAbility = new Ability("", "", 1, 1, false, false, {name: "", numberOfTurns: 1});
     this.newAbilityId = -1;
     this.abilityFormEnabled = false;
     this.updateAbilities();
   }
 
   cancelAddAbility() {
-    this.newAbility = new Ability("", "", 1, false);
+    this.newAbility = new Ability("", "", 1, 1, false, false, {name: "", numberOfTurns: 1});
     this.newAbilityId = -1;
     this.abilityFormEnabled = false;
   }
@@ -83,8 +89,10 @@ export class AbilitiesComponent implements OnInit, OnDestroy {
   }
 
   removeAbility(abilityId: number) {
-    this.characterService.deleteAbility(this.characterId, abilityId);
-    this.updateAbilities();
+    if(confirm("Are you sure you want to delete this ability?")) {
+      this.characterService.deleteAbility(this.characterId, abilityId);
+      this.updateAbilities();
+    }
   }
 
 }
