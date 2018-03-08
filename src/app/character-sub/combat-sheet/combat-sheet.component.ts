@@ -302,6 +302,20 @@ export class CombatSheetComponent implements OnInit, OnDestroy {
     }
   }
 
+  addDebuff() {
+    this.formType = "debuff";
+    this.formWounds = [];
+    this.woundFormVisible = true;
+  }
+
+  debuffAdded(effect: any) {
+    effect.type = "debuff";
+    this.currentSheet.statusEffects.push(effect);
+    this.characterService.updateCombatSheet(this.charId, this.currentSheetIndex, this.currentSheet);
+    this.woundFormCanceled();
+    this.actionsEnabled = true;
+  }
+
   // OTHER
 
   ngOnDestroy() {

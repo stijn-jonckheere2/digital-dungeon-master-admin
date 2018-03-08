@@ -25,7 +25,7 @@
     <button (click)="addWound()" class="btn btn-primary">Add</button>
     <button (click)="cancelForm()" class="btn btn-default">Cancel</button>
   </ng-container>
-  <ng-container *ngIf="formType !== 'add'">
+  <ng-container *ngIf="formType !== 'add' && formType !== 'debuff'">
     <h2>Which wound do you want to {{ formType }}?</h2>
     <div class="wound" *ngFor="let wound of wounds">
       <p>
@@ -36,5 +36,20 @@
       </p>
     </div>
     <button (click)="cancelForm()" class="btn btn-default">Cancel</button>
+  </ng-container>
+  <ng-container *ngIf="formType === 'debuff'">
+    <h2>Add a debuff</h2>
+    <form #debuffForm novalidate>
+      <div class="form-group">
+        <label for="name">name</label>
+        <input placeholder="Poisoned, crippled, ..." type="text" id="name" name="name" class="form-control" [(ngModel)]="newDebuff.name" required />
+      </div>
+      <div class="form-group">
+        <label for="numberOfTurns">number of turns</label>
+        <input type="number" id="numberOfTurns" name="numberOfTurns" class="form-control" [(ngModel)]="newDebuff.numberOfTurns" min="0" max="10"/>
+      </div>
+      <button (click)="addDebuff()" [disabled]="debuffForm.valid" class="btn btn-primary">Add</button>
+      <button (click)="cancelForm()" class="btn btn-default">Cancel</button>
+    </form>
   </ng-container>
 </div>

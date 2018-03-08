@@ -5,7 +5,7 @@
 
 <div class="effectsWrapper" *ngIf="actionsEnabled && currentSheet && currentSheet.statusEffects && currentSheet.statusEffects.length > 0">
     <ng-container *ngFor="let effect of currentSheet.statusEffects">
-        <div class="effect">
+        <div class="effect" [ngClass]="{'debuff': effect.type && effect.type === 'debuff'}">
             <p>
                 <span>{{ effect.name }}</span> ({{ effect.numberOfTurns }}T)
             </p>
@@ -53,7 +53,7 @@
 <div class="woundsWrapper" *ngIf="!actionsEnabled && currentSheet && currentSheet.wounds">
     <app-wound-selector *ngIf="!woundFormVisible" [wounds]="currentSheet.wounds"></app-wound-selector>
     <app-wound-form *ngIf="woundFormVisible" [wounds]="formWounds" [formType]="formType" (woundAdded)="woundAdded($event)" (woundLowered)="woundLowered($event)"
-        (woundRemoved)="woundRemoved($event)" (formCanceled)="woundFormCanceled()"></app-wound-form>
+        (woundRemoved)="woundRemoved($event)" (debuffAdded)="debuffAdded($event)" (formCanceled)="woundFormCanceled()"></app-wound-form>
 </div>
 
 <div class="buttonWrapper" *ngIf="actionsEnabled && character && currentSheet">
@@ -102,6 +102,9 @@
     </a>
     <a *ngIf="currentSheet.wounds.length === 0">
         <i style="opacity: 0.5" class="material-icons">remove_circle</i>
+    </a>
+    <a (click)="addDebuff()">
+        <i class="material-icons">security</i>
     </a>
     <a (click)="clearWounds()">
         <i class="material-icons">clear_all</i>
