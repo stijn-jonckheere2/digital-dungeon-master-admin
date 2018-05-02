@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { StoryRecap } from "../../character/character.models";
-import { StoryRecapService } from "../../story-recap.service";
 import { Router } from "@angular/router";
-import { ErrorService } from "../../error-service.service";
-import { AuthService } from "../../auth/auth.service";
+import { StoryRecap } from "../../../../shared/models";
+import { StoryRecapService } from "../../../services";
+import { ErrorService } from "../../../../shared/services";
+import { AuthService } from "../../../../auth/services";
 
 @Component({
   selector: "app-story-recap",
@@ -68,11 +68,6 @@ export class StoryRecapComponent implements OnInit, OnDestroy {
   numDaysBetween(d1, d2) {
     const diff = Math.abs(d1.getTime() - d2.getTime());
     return diff / (1000 * 60 * 60 * 24);
-  }
-
-  createRecap() {
-    const recap = new StoryRecap("", "admin", "admin");
-    this.recapService.addRecap(recap);
   }
 
 }
