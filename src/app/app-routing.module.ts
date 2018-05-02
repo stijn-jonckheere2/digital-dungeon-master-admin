@@ -1,12 +1,10 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { AuthGuard } from "./auth/services";
 
-import { AuthGuard } from "./auth/auth-guard.service";
+import { AdminNotesViewerComponent } from "./main/components/infrastructure/admin-notes-viewer/admin-notes-viewer.component";
+import { StoryRecapComponent } from "./main/components/infrastructure/story-recap/story-recap.component";
 
-import { CharacterEditComponent } from "./character/character-edit/character-edit.component";
-import { CharacterListComponent } from "./character/character-list/character-list.component";
-import { AdminNotesViewerComponent } from "./infrastructure/admin-notes-viewer/admin-notes-viewer.component";
-import { StoryRecapComponent } from "./infrastructure/story-recap/story-recap.component";
 
 const appRoutes: Routes = [
   { path: "admin-notes", component: AdminNotesViewerComponent, canActivate: [AuthGuard] },

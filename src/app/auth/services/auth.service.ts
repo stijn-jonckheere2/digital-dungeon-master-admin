@@ -6,8 +6,6 @@ import { Injectable, EventEmitter } from "@angular/core";
 
 import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
-import { ErrorService } from "../../error-service.service";
-import { CharacterService } from "../../character/character.service";
 import "rxjs/add/operator/filter";
 import * as auth0 from "auth0-js";
 import * as jwt_decode from "jwt-decode";
