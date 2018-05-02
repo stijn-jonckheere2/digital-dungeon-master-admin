@@ -1,0 +1,36 @@
+<h1>Character edit</h1>
+
+<div *ngIf="character !== undefined">
+  <div class="form-group">
+    <label for="name">name</label>
+    <input type="text" id="name" class="form-control" [(ngModel)]="character.name"/>
+  </div>
+  <div class="form-group">
+    <label for="className">class</label>
+    <select name="className" id="className" class="form-control" [(ngModel)]="character.className">
+      <option value="Base Class">Base Class</option>
+      <option value="Chromatic Warrior">Chromatic Warrior</option>
+      <option value="Draconic Blood Knight">Draconic Blood Knight</option>
+      <option value="Elementalist">Elementalist</option>
+      <option value="Tyrian Order of Godseekers: Hellraiser">Tyrian Order of Godseekers: Hellraiser</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="race">race</label>
+    <input type="text" id="race" class="form-control" [(ngModel)]="character.race"/>
+  </div>
+  <div class="form-group">
+    <label for="description">description</label>
+    <textarea rows="10" id="description" class="form-control" [(ngModel)]="character.description"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="age">age</label>
+    <input type="number" id="age" class="form-control" [(ngModel)]="character.age"/>
+  </div>
+  <div class="form-group">
+    <label for="level">level</label>
+    <input type="number" id="level" class="form-control" [(ngModel)]="character.level"/>
+  </div>
+  <button class="btn btn-primary" (click)="onSaveCharacter()">Save</button>
+  <a [routerLink]="['/characters']" class="btn btn-default">Cancel</a>
+</div>

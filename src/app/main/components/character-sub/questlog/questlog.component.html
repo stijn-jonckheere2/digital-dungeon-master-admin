@@ -1,0 +1,58 @@
+<h2>Quests</h2>
+<ng-container *ngIf="questFormEnabled === false">
+  <div class="inventory" *ngIf="character && character.questLog && character.questLog.length > 0">
+    <div class="inventory-item" *ngFor="let quest of activeQuestLog">
+      <p class="inventory-item-name">
+        {{ quest.name }}
+      </p>
+      <p class="inventory-item-description">{{ quest.description }}</p>
+      <div class="inventory-buttons">
+        <button class="btn btn-default" (click)="editQuest(quest.originId, quest)">
+            <i class="material-icons">&#xE254;</i>
+        </button>
+        <button class="btn btn-danger" (click)="removeQuest(quest.originId)">
+            <i class="material-icons">delete_forever</i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="button-wrapper">
+    <button class="btn btn-primary" (click)="enableAddQuest()">Add new quest</button>
+    <button class="btn btn-default" (click)="toggleCompleted()" *ngIf="!completedVisible">Show completed quests</button>
+    <button class="btn btn-default" (click)="toggleCompleted()" *ngIf="completedVisible">Hide completed quests</button>
+  </div>
+  <h2 *ngIf="completedVisible && character && character.questLog && completedQuestLog.length > 0">Completed</h2>
+  <div class="inventory" *ngIf="completedVisible && character && character.questLog && completedQuestLog.length > 0">
+    <div class="inventory-item" *ngFor="let quest of completedQuestLog" [ngClass]="{'complete': quest.complete}">
+      <p class="inventory-item-name">
+        {{ quest.name }}
+        <span *ngIf="quest.complete">(complete)</span>
+      </p>
+      <p class="inventory-item-description">{{ quest.description }}</p>
+      <div class="inventory-buttons">
+        <button class="btn btn-default" (click)="editQuest(quest.originId, quest)">
+            <i class="material-icons">&#xE254;</i>
+        </button>
+        <button class="btn btn-danger" (click)="removeQuest(quest.originId)">
+          <i class="material-icons">delete_forever</i>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div *ngIf="questFormEnabled === true">
+  <div class="form-group">
+    <label for="name">name</label>
+    <input type="text" id="name" class="form-control" [(ngModel)]="newQuest.name" />
+  </div>
+  <div class="form-group">
+    <label for="description">description</label>
+    <textarea rows="10" id="description" class="form-control" [(ngModel)]="newQuest.description"></textarea>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" value="" [(ngModel)]="newQuest.complete">quest complete</label>
+  </div>
+  <button class="btn btn-primary" (click)="saveQuest()">Save</button>
+  <a (click)="cancelAddQuest()" class="btn btn-default">Cancel</a>
+</div>
