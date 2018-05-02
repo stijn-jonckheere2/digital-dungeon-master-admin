@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
+import { Component, OnInit, OnChanges, Input, EventEmitter, Output } from "@angular/core";
 import { CombatWound } from "../../character/character.models";
 import { ErrorService } from "../../error-service.service";
 
@@ -7,7 +7,7 @@ import { ErrorService } from "../../error-service.service";
   templateUrl: "./wound-form.component.html",
   styleUrls: ["./wound-form.component.scss"]
 })
-export class WoundFormComponent implements OnInit {
+export class WoundFormComponent implements OnInit, OnChanges {
   @Input() wounds: CombatWound[];
   @Input() formType: string;
 
@@ -29,6 +29,12 @@ export class WoundFormComponent implements OnInit {
 
   ngOnInit() {
     console.log("Loaded wound form", this.formType, this.wounds);
+  }
+
+  ngOnChanges() {
+    this.wounds.sort(function (a, b) {
+      return a.location > b.location ? 1 : 0;
+    });
   }
 
   addWound() {
