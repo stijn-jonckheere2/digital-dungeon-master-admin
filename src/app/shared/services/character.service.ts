@@ -3,7 +3,7 @@ import * as firebase from "firebase";
 import { environment } from "../../../environments/environment";
 
 import { Http } from "@angular/http";
-import { Character, InventoryItem, Npc, Quest, Ability, CombatSheet, DraconicBloodKnightCombatSheet, DraconicBloodKnightAbility } from "../../shared/models";
+import { Character, InventoryItem, Npc, Quest, Ability, CombatSheet, DraconicBloodKnightCombatSheet, DraconicBloodKnightAbility, NecromancerCombatSheet } from "../../shared/models";
 import { AuthService } from "../../auth/services/auth.service";
 import { ErrorService } from "./error-service.service";
 
@@ -192,7 +192,7 @@ export class CharacterService {
 
     deleteInventoryItem(charId: number, itemId: number) {
         this.characters[charId].addLog("[ADMIN] Removed <" + this.characters[charId].inventory[itemId].name + "> from inventory",
-        "inventoryLog");
+            "inventoryLog");
         this.characters[charId].inventory.splice(itemId, 1);
         this.updateCharacterById(charId, this.characters[charId]);
     }
@@ -318,7 +318,7 @@ export class CharacterService {
 
     deleteAbility(charId: number, abilityId: number) {
         this.characters[charId].addLog("[ADMIN] Removed ability  <" + this.characters[charId].abilities[abilityId].name + ">",
-        "abilityLog");
+            "abilityLog");
         this.characters[charId].abilities.splice(abilityId, 1);
         this.updateCharacterById(charId, this.characters[charId]);
     }
@@ -338,9 +338,9 @@ export class CharacterService {
         switch (className) {
             case "Draconic Blood Knight":
                 for (let i = 0; i < char.combatSheets.length; i++) {
-                    const currentSheet = char.combatSheets[i];
+                    const currentSheet: any = char.combatSheets[i];
 
-                    if (!(currentSheet instanceof DraconicBloodKnightCombatSheet)) {
+                    if (!currentSheet.bloodMarks || !(currentSheet instanceof DraconicBloodKnightCombatSheet)) {
                         const newSheet = Character.convertCombatSheet(currentSheet, "Draconic Blood Knight");
                         char.combatSheets[i] = newSheet;
                     }
@@ -351,6 +351,16 @@ export class CharacterService {
                     if (!(currentAbility instanceof DraconicBloodKnightAbility)) {
                         const newAbilitiy = Character.convertAbility(currentAbility, "Draconic Blood Knight");
                         char.abilities[i] = newAbilitiy;
+                    }
+                }
+                break;
+            case "Necromancer":
+                for (let i = 0; i < char.combatSheets.length; i++) {
+                    const currentSheet: any = char.combatSheets[i];
+
+                    if (!currentSheet.minionWoundSheets || !(currentSheet instanceof NecromancerCombatSheet)) {
+                        const newSheet = Character.convertCombatSheet(currentSheet, "Necromancer");
+                        char.combatSheets[i] = newSheet;
                     }
                 }
                 break;
