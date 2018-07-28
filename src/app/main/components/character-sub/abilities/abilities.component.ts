@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Character, Ability, DraconicBloodKnightAbility } from "../../../../shared/models";
 import { CharacterService, ErrorService } from "../../../../shared/services";
+import { ChaosMageAbilityType } from "../../../../shared/models/character.enums";
 
 @Component({
   selector: "app-abilities",
@@ -13,6 +14,7 @@ export class AbilitiesComponent implements OnInit, OnDestroy {
   characterSub: any;
   characterId: number;
 
+  abilityType = ChaosMageAbilityType;
   abilityFormEnabled = false;
   newAbility = new Ability("", "", 1, 1, false, false, { name: "", numberOfTurns: 1 });
   newAbilityId = -1;
@@ -101,6 +103,9 @@ export class AbilitiesComponent implements OnInit, OnDestroy {
     switch (this.character.className) {
       case "Draconic Blood Knight":
         this.newAbility = Character.convertAbility(this.newAbility, "Draconic Blood Knight");
+        break;
+      case "Chaos Mage":
+        this.newAbility = Character.convertAbility(this.newAbility, "Chaos Mage");
         break;
     }
   }
