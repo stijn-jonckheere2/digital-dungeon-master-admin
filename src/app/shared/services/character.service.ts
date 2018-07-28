@@ -47,7 +47,6 @@ export class CharacterService {
             (resolve, reject) => {
                 const userId = this.authService.getUserId();
                 this.characterDb = firebase.database().ref().child("characters");
-                console.log("Fetching Characters!" + new Date());
 
                 this.characterDb.on("value", snapshot => {
                     if (snapshot.val() !== null) {
@@ -91,7 +90,6 @@ export class CharacterService {
     getCharacters() {
         const promise = new Promise(
             (resolve, reject) => {
-                console.log("Get Characters Called" + new Date(), this.charactersFetched);
                 if (this.charactersFetched) {
                     resolve(this.characters);
                 } else {
@@ -289,6 +287,9 @@ export class CharacterService {
 
     // Combat Sheet Methods
     addCombatSheet(charId: number, sheet: CombatSheet) {
+        if (this.characters[charId].className !== "Base Class") {
+            sheet = Character.convertCombatSheet(sheet, this.characters[charId].className);
+        }
         if (this.characters[charId].combatSheets) {
             this.characters[charId].combatSheets.push(sheet);
         } else {
