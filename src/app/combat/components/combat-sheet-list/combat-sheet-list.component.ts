@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Character, CombatSheet } from "../../../shared/models";
+import { Character, CombatSheet, ChaosMageCombatSheet } from "../../../shared/models";
 import { CharacterService, ErrorService } from "../../../shared/services";
 
 @Component({
@@ -67,6 +67,12 @@ export class CombatSheetListComponent implements OnInit, OnDestroy {
     this.newSheet.name = sheet.name + " (continued)";
     this.newSheet.autoRoll = sheet.autoRoll;
     this.newSheet.initiative = sheet.initiative;
+
+    if (sheet.hasOwnProperty("painMeter")) {
+      const chaosSheet = this.newSheet as ChaosMageCombatSheet;
+      chaosSheet.painMeter = sheet["painMeter"];
+      this.newSheet = chaosSheet;
+    }
   }
 
   addSheet() {
