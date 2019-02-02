@@ -1,0 +1,21 @@
+diff a/src/app/main/components/character-sub/abilities/abilities.component.ts b/src/app/main/components/character-sub/abilities/abilities.component.ts	(rejected hunks)
+@@ -1,12 +1,12 @@
+-import { Component, OnInit, OnDestroy } from "@angular/core";
+-import { ActivatedRoute } from "@angular/router";
+-import { Character, Ability, DraconicBloodKnightAbility, ChaosMageAbilityType } from "../../../../shared/models";
+-import { CharacterService, ErrorService } from "../../../../shared/services";
++import { Component, OnInit, OnDestroy } from '@angular/core';
++import { ActivatedRoute } from '@angular/router';
++import { Character, Ability, DraconicBloodKnightAbility, ChaosMageAbilityType } from '../../../../shared/models';
++import { CharacterService, ErrorService } from '../../../../shared/services';
+ 
+ @Component({
+-  selector: "app-abilities",
+-  templateUrl: "./abilities.component.html",
+-  styleUrls: ["./abilities.component.scss"]
++  selector: 'app-abilities',
++  templateUrl: './abilities.component.html',
++  styleUrls: ['./abilities.component.scss']
+ })
+ export class AbilitiesComponent implements OnInit, OnDestroy {
+   character: Character;

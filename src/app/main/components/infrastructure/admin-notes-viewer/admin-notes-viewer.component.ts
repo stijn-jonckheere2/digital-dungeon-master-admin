@@ -1,22 +1,22 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { AdminNotesService } from "../../../services";
-import { ErrorService } from "../../../../shared/services";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AdminNotesService } from '../../../services';
+import { ErrorService } from '../../../../shared/services';
 
 @Component({
-  selector: "app-admin-notes-viewer",
-  templateUrl: "./admin-notes-viewer.component.html",
-  styleUrls: ["./admin-notes-viewer.component.scss"]
+  selector: 'app-admin-notes-viewer',
+  templateUrl: './admin-notes-viewer.component.html',
+  styleUrls: ['./admin-notes-viewer.component.scss']
 })
 export class AdminNotesViewerComponent implements OnInit {
 
-  adminNotes = "";
+  adminNotes = '';
   adminNotesFetched = false;
   noteEdit = false;
 
   constructor(private adminNotesService: AdminNotesService,
-    private router: Router,
-    private errorService: ErrorService) { }
+              private router: Router,
+              private errorService: ErrorService) { }
 
   ngOnInit() {
     this.updateNotes();

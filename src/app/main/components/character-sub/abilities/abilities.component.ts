@@ -1,13 +1,13 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { Character, Ability, DraconicBloodKnightAbility } from "../../../../shared/models";
-import { CharacterService, ErrorService } from "../../../../shared/services";
-import { ChaosMageAbilityType } from "../../../../shared/models/character.enums";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Character, Ability, DraconicBloodKnightAbility } from '../../../../shared/models';
+import { CharacterService, ErrorService } from '../../../../shared/services';
+import { ChaosMageAbilityType } from '../../../../shared/models/character.enums';
 
 @Component({
-  selector: "app-abilities",
-  templateUrl: "./abilities.component.html",
-  styleUrls: ["./abilities.component.scss"]
+  selector: 'app-abilities',
+  templateUrl: './abilities.component.html',
+  styleUrls: ['./abilities.component.scss']
 })
 export class AbilitiesComponent implements OnInit, OnDestroy {
   character: Character;
@@ -16,16 +16,16 @@ export class AbilitiesComponent implements OnInit, OnDestroy {
 
   abilityType = ChaosMageAbilityType;
   abilityFormEnabled = false;
-  newAbility = new Ability("", "", 1, 1, false, false, { name: "", numberOfTurns: 1 });
+  newAbility = new Ability('', '', 1, 1, false, false, { name: '', numberOfTurns: 1 });
   newAbilityId = -1;
 
   constructor(private characterService: CharacterService,
-    private errorService: ErrorService,
-    private route: ActivatedRoute) {
+              private errorService: ErrorService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.characterId = +this.route.parent.snapshot.params["id"];
+    this.characterId = +this.route.parent.snapshot.params.id;
     this.loadCharacter();
     this.characterSub = this.characterService.characterUpdatesReceived.subscribe(
       () => {
@@ -42,7 +42,6 @@ export class AbilitiesComponent implements OnInit, OnDestroy {
     this.characterService.getCharacterById(this.characterId).then(
       (char: Character) => {
         this.character = char;
-        this.updateNewAbility();
         this.handleForm();
       }
     );
@@ -67,22 +66,20 @@ export class AbilitiesComponent implements OnInit, OnDestroy {
       this.characterService.updateAbility(this.characterId, this.newAbilityId, this.newAbility);
     } else {
       if (this.newAbility.name.length === 0) {
-        this.errorService.displayError("Ability name can't be empty!");
+        this.errorService.displayError('Ability name can\'t be empty!');
       } else {
         this.characterService.addAbility(this.characterId, this.newAbility);
       }
     }
-    this.newAbility = new Ability("", "", 1, 1, false, false, { name: "", numberOfTurns: 1 });
+    this.newAbility = new Ability('', '', 1, 1, false, false, { name: '', numberOfTurns: 1 });
     this.newAbilityId = -1;
-    this.updateNewAbility();
     this.abilityFormEnabled = false;
     this.updateAbilities();
   }
 
   cancelAddAbility() {
-    this.newAbility = new Ability("", "", 1, 1, false, false, { name: "", numberOfTurns: 1 });
+    this.newAbility = new Ability('', '', 1, 1, false, false, { name: '', numberOfTurns: 1 });
     this.newAbilityId = -1;
-    this.updateNewAbility();
     this.abilityFormEnabled = false;
   }
 
@@ -93,20 +90,9 @@ export class AbilitiesComponent implements OnInit, OnDestroy {
   }
 
   removeAbility(abilityId: number) {
-    if (confirm("Are you sure you want to delete this ability?")) {
+    if (confirm('Are you sure you want to delete this ability?')) {
       this.characterService.deleteAbility(this.characterId, abilityId);
       this.updateAbilities();
-    }
-  }
-
-  updateNewAbility() {
-    switch (this.character.className) {
-      case "Draconic Blood Knight":
-        this.newAbility = Character.convertAbility(this.newAbility, "Draconic Blood Knight");
-        break;
-      case "Chaos Mage":
-        this.newAbility = Character.convertAbility(this.newAbility, "Chaos Mage");
-        break;
     }
   }
 
