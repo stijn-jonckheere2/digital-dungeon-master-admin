@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 
@@ -30,6 +31,7 @@ import { AdminNotesService, StoryRecapService } from './main/services';
 import { ErrorService, CharacterService } from './shared/services';
 import { AdminNotesViewerComponent } from './main/components/infrastructure/admin-notes-viewer/admin-notes-viewer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatSelectModule } from '@angular/material';
 
 const charRoutes: Routes = [
   { path: 'characters', component: CharacterListComponent, canActivate: [AuthGuard] },
@@ -76,6 +78,13 @@ const charRoutes: Routes = [
     CommonModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRippleModule,
+    MatCheckboxModule,
+    MatSelectModule,
     RouterModule.forRoot(charRoutes)
   ],
   providers: [
