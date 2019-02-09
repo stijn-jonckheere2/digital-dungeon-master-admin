@@ -5,6 +5,7 @@ import { AuthService } from '../../auth/services';
 import { ErrorService } from './error-service.service';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { take } from 'rxjs/operators';
 
 @Injectable()
 export class CharacterService {
@@ -33,7 +34,7 @@ export class CharacterService {
     saveCharacters() {
         const charactersPerUser = this.deconvertCharacters();
         const url = environment.database.databaseURL + '/characters.json';
-        this.http.put(url, charactersPerUser).subscribe(
+        this.http.put(url, charactersPerUser).pipe(take(1)).subscribe(
             (response) => { console.log('Characters saved succesfully!' + new Date()); },
             (error) => {
                 this.errorService.displayError('Save characters failed! => ' + error);

@@ -31,7 +31,7 @@ import { AdminNotesService, StoryRecapService } from './main/services';
 import { ErrorService, CharacterService } from './shared/services';
 import { AdminNotesViewerComponent } from './main/components/infrastructure/admin-notes-viewer/admin-notes-viewer.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatSelectModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatSelectModule, MatIconModule } from '@angular/material';
 
 const charRoutes: Routes = [
   { path: 'characters', component: CharacterListComponent, canActivate: [AuthGuard] },
@@ -85,6 +85,7 @@ const charRoutes: Routes = [
     MatRippleModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatIconModule,
     RouterModule.forRoot(charRoutes)
   ],
   providers: [
