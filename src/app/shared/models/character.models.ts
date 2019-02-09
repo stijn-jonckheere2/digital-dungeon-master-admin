@@ -5,7 +5,7 @@ import { ChaosMageAbilityType } from './character.enums';
 // tslint:disable:space-before-function-paren
 
 class Serializable {
-  static fromJSON(jsonObj: Character) {
+  static fromJSON(jsonObj: Character, userObjId: string) {
     const convertedChar = new Character(
       jsonObj.name,
       jsonObj.race,
@@ -15,6 +15,7 @@ class Serializable {
       jsonObj.level
     );
 
+    convertedChar.userId = userObjId;
     convertedChar.gold = jsonObj.gold;
 
     convertedChar.abilities = jsonObj.abilities || [];
@@ -87,6 +88,7 @@ class Serializable {
 }
 
 export class Character extends Serializable {
+  public userId: string;
   public gold: number;
 
   public abilities: Ability[];
@@ -130,6 +132,7 @@ export class Character extends Serializable {
     this.generateProfessionStats();
 
     this.logs = [];
+    this.userId = '';
   }
 
   generatePrimaryStats() {

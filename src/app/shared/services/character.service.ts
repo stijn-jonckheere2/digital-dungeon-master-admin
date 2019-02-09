@@ -30,17 +30,21 @@ export class CharacterService {
     }
 
     // Character Methods
-    saveCharacters(characters: Character[]) {
-        const userId = this.authService.getUserId();
-        const url = environment.database.databaseURL + '/characters/' + userId + '-characters.json';
-        return this.http.put(url, this.characters);
+    saveCharacters() {
+        const charactersPerUser = this.deconvertCharacters();
+        const url = environment.database.databaseURL + '/characters.json';
+        this.http.put(url, charactersPerUser).subscribe(
+            (response) => { console.log('Characters saved succesfully!' + new Date()); },
+            (error) => {
+                this.errorService.displayError('Save characters failed! => ' + error);
+            }
+        );
     }
 
     fetchCharacters() {
         const fetchPromise = new Promise(
             (resolve, reject) => {
-                const userId = this.authService.getUserId();
-                this.characterDb = firebase.database().ref().child('characters').child(userId + '-characters');
+                this.characterDb = firebase.database().ref().child('characters');
 
                 this.characterDb.on('value', snapshot => {
                     if (snapshot.val() !== null) {
@@ -55,10 +59,31 @@ export class CharacterService {
     }
 
     convertCharacters(characters) {
-        this.characters = characters.map((char, index) => {
-            return Character.fromJSON(char);
-        });
+        this.characters = [];
+        for (const prop in characters) {
+            if (characters[prop]) {
+                characters[prop].map((char, index) => {
+                    this.characters.push(Character.fromJSON(char, prop));
+                });
+            }
+        }
         this.charactersFetched = true;
+    }
+
+    deconvertCharacters() {
+        const deconvertedCharacters = {};
+
+        for (const char of this.characters) {
+            // tslint:disable:no-string-literal
+            if (typeof deconvertedCharacters[char['userId']] === typeof []) {
+                deconvertedCharacters[char['userId']].push(char);
+            } else {
+                deconvertedCharacters[char['userId']] = [];
+                deconvertedCharacters[char['userId']].push(char);
+            }
+        }
+
+        return deconvertedCharacters;
     }
 
     getCharacters() {
@@ -117,45 +142,14 @@ export class CharacterService {
 
     updateCharacterById(id: number, character: Character) {
         this.characters[id] = character;
-        this.saveCharacters(this.characters).subscribe(
-            () => { },
-            (error) => {
-                this.errorService.displayError(error.json().error);
-            }
-        );
+        this.saveCharacters();
     }
 
     updateCharacterByIdAfterEdit(id: number, character: Character) {
-        // const char = this.convertClass(character);
         this.characters[id] = character;
-        this.saveCharacters(this.characters).subscribe(
-            () => { },
-            (error) => {
-                this.errorService.displayError(error.json().error);
-            }
-        );
+        this.saveCharacters();
     }
 
-    addCharacter(character: Character) {
-        // const char = this.convertClass(character);
-        this.characters.push(character);
-        this.saveCharacters(this.characters).subscribe(
-            () => { },
-            (error) => {
-                this.errorService.displayError(error.json().error);
-            }
-        );
-    }
-
-    deleteCharacter(id: number) {
-        this.characters.splice(id, 1);
-        this.saveCharacters(this.characters).subscribe(
-            () => { },
-            (error) => {
-                this.errorService.displayError(error.message);
-            }
-        );
-    }
 
     // Inventory Methods
     addInventoryItem(charId: number, item: InventoryItem) {
@@ -164,7 +158,7 @@ export class CharacterService {
         } else {
             this.characters[charId].inventory = [item];
         }
-        this.characters[charId].addLog('Added <' + item.name + ' x' + item.amount + '> to inventory', 'inventoryLog');
+        this.characters[charId].addLog('[ADMIN] Added <' + item.name + ' x' + item.amount + '> to inventory', 'inventoryLog');
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
@@ -175,14 +169,14 @@ export class CharacterService {
     updateInventoryItem(charId: number, itemId: number, item: InventoryItem) {
         const character = this.characters[charId];
         character.inventory[itemId] = item;
-        this.characters[charId].addLog('Updated Item  <' + item.name + '>', 'inventoryLog');
+        this.characters[charId].addLog('[ADMIN] Updated Item  <' + item.name + '>', 'inventoryLog');
         this.updateCharacterById(charId, character);
     }
 
     useInventoryItem(charId: number, itemId: number) {
         const character = this.characters[charId];
         const item = character.inventory[itemId];
-        this.characters[charId].addLog('Removed 1 stack of <' + item.name + '> from inventory', 'inventoryLog');
+        this.characters[charId].addLog('[ADMIN] Removed 1 stack of <' + item.name + '> from inventory', 'inventoryLog');
 
         if (item.amount === 1) {
             character.inventory.splice(itemId, 1);
@@ -194,20 +188,20 @@ export class CharacterService {
     }
 
     deleteInventoryItem(charId: number, itemId: number) {
-        this.characters[charId].addLog('Removed <' + this.characters[charId].inventory[itemId].name + '> from inventory', 'inventoryLog');
+        this.characters[charId].addLog('[ADMIN] Removed <' + this.characters[charId].inventory[itemId].name + '> from inventory', 'inventoryLog');
         this.characters[charId].inventory.splice(itemId, 1);
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
     addGold(charId: number, gold: number) {
         this.characters[charId].gold += gold;
-        this.characters[charId].addLog('Added  <' + gold + '> gold to inventory', 'inventoryLog');
+        this.characters[charId].addLog('[ADMIN] Added  <' + gold + '> gold to inventory', 'inventoryLog');
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
     reduceGold(charId: number, gold: number) {
         this.characters[charId].gold -= gold;
-        this.characters[charId].addLog('Removed  <' + gold + '> gold from inventory', 'inventoryLog');
+        this.characters[charId].addLog('[ADMIN] Removed  <' + gold + '> gold from inventory', 'inventoryLog');
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
@@ -218,7 +212,7 @@ export class CharacterService {
         } else {
             this.characters[charId].npcList = [npc];
         }
-        this.characters[charId].addLog('Added NPC  <' + npc.name + '>', 'npcLog');
+        this.characters[charId].addLog('[ADMIN] Added NPC  <' + npc.name + '>', 'npcLog');
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
@@ -229,12 +223,12 @@ export class CharacterService {
     updateNpc(charId: number, npcId: number, npc: Npc) {
         const character = this.characters[charId];
         character.npcList[npcId] = npc;
-        this.characters[charId].addLog('Updated NPC  <' + npc.name + '>', 'npcLog');
+        this.characters[charId].addLog('[ADMIN] Updated NPC  <' + npc.name + '>', 'npcLog');
         this.updateCharacterById(charId, character);
     }
 
     deleteNpc(charId: number, npcId: number) {
-        this.characters[charId].addLog('Removed NPC  <' + this.characters[charId].npcList[npcId].name + '>', 'npcLog');
+        this.characters[charId].addLog('[ADMIN] Removed NPC  <' + this.characters[charId].npcList[npcId].name + '>', 'npcLog');
         this.characters[charId].npcList.splice(npcId, 1);
         this.updateCharacterById(charId, this.characters[charId]);
     }
@@ -246,7 +240,7 @@ export class CharacterService {
         } else {
             this.characters[charId].questLog = [quest];
         }
-        this.characters[charId].addLog('Added quest  <' + quest.name + '>', 'questLog');
+        this.characters[charId].addLog('[ADMIN] Added quest  <' + quest.name + '>', 'questLog');
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
@@ -257,12 +251,12 @@ export class CharacterService {
     updateQuest(charId: number, questId: number, quest: Quest) {
         const character = this.characters[charId];
         character.questLog[questId] = quest;
-        this.characters[charId].addLog('Updated quest  <' + quest.name + '>', 'questLog');
+        this.characters[charId].addLog('[ADMIN] Updated quest  <' + quest.name + '>', 'questLog');
         this.updateCharacterById(charId, character);
     }
 
     deleteQuest(charId: number, questId: number) {
-        this.characters[charId].addLog('Deleted quest  <' + this.characters[charId].questLog[questId].name + '>', 'questLog');
+        this.characters[charId].addLog('[ADMIN] Deleted quest  <' + this.characters[charId].questLog[questId].name + '>', 'questLog');
         this.characters[charId].questLog.splice(questId, 1);
         this.updateCharacterById(charId, this.characters[charId]);
     }
@@ -274,14 +268,14 @@ export class CharacterService {
         } else {
             this.characters[charId].abilities = [ability];
         }
-        this.characters[charId].addLog('Added ability  <' + ability.name + '>', 'abilityLog');
+        this.characters[charId].addLog('[ADMIN] Added ability  <' + ability.name + '>', 'abilityLog');
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
     updateAbility(charId: number, abilityId: number, ability: Ability) {
         const character = this.characters[charId];
         character.abilities[abilityId] = ability;
-        this.characters[charId].addLog('Updated ability  <' + ability.name + '>', 'abilityLog');
+        this.characters[charId].addLog('[ADMIN] Updated ability  <' + ability.name + '>', 'abilityLog');
         this.updateCharacterById(charId, character);
     }
 
@@ -290,7 +284,7 @@ export class CharacterService {
     }
 
     deleteAbility(charId: number, abilityId: number) {
-        this.characters[charId].addLog('Removed ability  <' + this.characters[charId].abilities[abilityId].name + '>', 'abilityLog');
+        this.characters[charId].addLog('[ADMIN] Removed ability  <' + this.characters[charId].abilities[abilityId].name + '>', 'abilityLog');
         this.characters[charId].abilities.splice(abilityId, 1);
         this.updateCharacterById(charId, this.characters[charId]);
     }
@@ -302,14 +296,14 @@ export class CharacterService {
         } else {
             this.characters[charId].combatSheets = [sheet];
         }
-        this.characters[charId].addLog('Added combat sheet  <' + sheet.name + '>', 'combatSheetLog');
+        this.characters[charId].addLog('[ADMIN] Added combat sheet  <' + sheet.name + '>', 'combatSheetLog');
         this.updateCharacterById(charId, this.characters[charId]);
     }
 
     updateCombatSheet(charId: number, sheetIndex: number, sheet: CombatSheet) {
         const character = this.characters[charId];
         character.combatSheets[sheetIndex] = sheet;
-        this.characters[charId].addLog('Updated combat sheet  <' + sheet.name + '>', 'combatSheetLog');
+        this.characters[charId].addLog('[ADMIN] Updated combat sheet  <' + sheet.name + '>', 'combatSheetLog');
         this.updateCharacterById(charId, character);
     }
 
@@ -319,7 +313,7 @@ export class CharacterService {
 
     deleteCombatSheet(charId: number, sheetIndex: number) {
         this.characters[charId]
-            .addLog('Removed combat sheet  <' + this.characters[charId].combatSheets[sheetIndex].name + '>', 'combatSheetLog');
+            .addLog('[ADMIN] Removed combat sheet  <' + this.characters[charId].combatSheets[sheetIndex].name + '>', 'combatSheetLog');
         this.characters[charId].combatSheets.splice(sheetIndex, 1);
         this.updateCharacterById(charId, this.characters[charId]);
     }
