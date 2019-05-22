@@ -32,6 +32,8 @@ import { ErrorService, CharacterService } from './shared/services';
 import { AdminNotesViewerComponent } from './main/components/infrastructure/admin-notes-viewer/admin-notes-viewer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatSelectModule, MatIconModule, MatSidenavModule } from '@angular/material';
+import { WorldMapComponent } from './main/components/infrastructure/world-map';
+import { PinchZoomModule } from 'ngx-pinch-zoom';
 
 const charRoutes: Routes = [
   { path: 'characters', component: CharacterListComponent, canActivate: [AuthGuard] },
@@ -48,6 +50,7 @@ const charRoutes: Routes = [
     ]
   },
   { path: 'characters/:id/edit', component: CharacterEditComponent, canActivate: [AuthGuard] },
+  { path: 'world-map', component: WorldMapComponent, canActivate: [AuthGuard] },
 ];
 
 const materialModules = [
@@ -74,6 +77,7 @@ const materialModules = [
     ErrorDisplayComponent,
     AbilitiesComponent,
     AdminNotesViewerComponent,
+    WorldMapComponent,
     StoryRecapComponent,
     CharacterListComponent,
     CharacterEditComponent,
@@ -90,6 +94,7 @@ const materialModules = [
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    PinchZoomModule,
     ...materialModules,
     RouterModule.forRoot(charRoutes)
   ],
