@@ -1,0 +1,14 @@
+@import '~sass/variables';
+
+:host {
+    display: block;
+    box-sizing: border-box;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas { 
+    border: 4px dashed $primary-color;
+}

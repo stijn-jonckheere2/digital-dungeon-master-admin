@@ -32,8 +32,10 @@ import { ErrorService, CharacterService } from './shared/services';
 import { AdminNotesViewerComponent } from './main/components/infrastructure/admin-notes-viewer/admin-notes-viewer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatSelectModule, MatIconModule, MatSidenavModule } from '@angular/material';
-import { WorldMapComponent } from './main/components/infrastructure/world-map';
 import { PinchZoomModule } from 'ngx-pinch-zoom';
+import { CanvasComponent, WorldMapComponent } from './shared/components';
+import { EcoFabSpeedDialModule } from '@ecodev/fab-speed-dial';
+import { WorldMapService } from './main/services/world-map.service';
 
 const charRoutes: Routes = [
   { path: 'characters', component: CharacterListComponent, canActivate: [AuthGuard] },
@@ -84,6 +86,7 @@ const materialModules = [
     CharacterMenuComponent,
     CharacterLogsComponent,
     FilterPipe,
+    CanvasComponent
   ],
   imports: [
     BrowserModule,
@@ -96,12 +99,14 @@ const materialModules = [
     BrowserAnimationsModule,
     PinchZoomModule,
     ...materialModules,
+    EcoFabSpeedDialModule,
     RouterModule.forRoot(charRoutes)
   ],
   providers: [
     AuthService,
     ErrorService,
     AdminNotesService,
+    WorldMapService,
     StoryRecapService,
     AuthGuard,
     CharacterService,
